@@ -1,0 +1,48 @@
+
+/* BASE STYLES ========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+/* .clearfix::after {
+  display: table:
+  clear: both;
+  content: "";
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    background: pink;
+}
+
+.container-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-column {
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* MEDIA QUERIES ========================================= */
+/*
+@media screen and (max-width: 425px){
+    html {
+        font-size: 12pt;
+    }
+}
+ */
