@@ -107,6 +107,43 @@ button {
     color: #6b6a6a;
 }
 
+/* CART ========================================= */
+
+.cart-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 5em;
+}
+
+.form-space-left{
+    width: 100%;
+    padding-right: 1em;
+}
+
+.form-space-right{
+    width: 100%;
+    padding: 1em;
+    margin: 1em 0 1em 1em;
+    border: solid 1px #ccc;
+}
+
+#cart-form {
+    border: solid 1px black;
+    padding: 2em;
+    border-radius: 1em;
+    width: 100%;
+    justify-content: center;
+}
+
+.cart-item {
+    border-top: solid 1px #ccc;
+}
+
+.cart-delete {
+    float: right;
+}
+
 /* ABOUT ========================================= */
 
 #about {
