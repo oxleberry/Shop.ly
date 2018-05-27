@@ -40,6 +40,10 @@ a {
     text-decoration: none;
 }
 
+main {
+    min-height: 90vh;
+}
+
 /* NAV ========================================= */
 
 /* MAIN ========================================= */
@@ -68,6 +72,18 @@ a {
     width: 30%;
 }
 
+/* MAIN CATEGORY PAGE ========================================= */
+
+.outer-cate-cont {
+    margin: 5em;
+}
+
+.cate-spaceing {
+    /* justify-content: space-between; */
+    padding: 1em;
+    margin: 1em;
+}
+
 /* ABOUT ========================================= */
 
 #about {
@@ -79,7 +95,7 @@ a {
 /* FOOTER ========================================= */
 
 footer {
-    background-color: #eed6ca;
+    background-color: #f8f9fa;
     height: 4em;
 }
 
