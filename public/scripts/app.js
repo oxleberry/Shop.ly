@@ -36,9 +36,26 @@ $(function(){
 
 }); // end of document.ready
 
-
-function handleSuccess() {
-  console.log("loaded success");
+// populates seed data
+function handleSuccess(json) {
+    console.log("loaded success");
+    var design = json;
+    json.forEach((el, idx) => {
+        var showDesign = `
+        <div class="card card-size">
+          <img class="card-img-top" src="images/${el.image}" alt="tee-design">
+          <div class="card-body">
+            <h5 class="card-title">${el.design_title}</h5>
+            <p class="card-text">${el.custom_text}</p>
+            <p class="card-text">${el.designer_name}</p>
+            <button class="btn btn-primary">Buy</button>
+            <button class="btn btn-primary">Update</button>
+            <button class="btn btn-primary">x</button>
+          </div>
+        </div>
+        `;
+        $('#tee-design').append(showDesign);
+    });
 }
 
 function newDesignSuccess(design) {
