@@ -8,6 +8,10 @@ const bodyParser = require('body-parser');
 
 // generate a new express app and call it 'app'
 const app = express();
+// Require the models directory in server.js
+const db = require('./models');
+// const controllers = require('./controllers');
+
 
 // serve the public directory as a static file directory
 app.use(express.static('public'));
@@ -16,57 +20,41 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// Require the models directory in server.js
-const db = require('./models');
-// const controllers = require('./controllers');
-
-
 //  ROUTES --------------------------
-
-// TEST ROUTES
-// const burgers = [
-//   'Hamburger',
-//   'Cheese Burger',
-//   'Vegetable Burger'
-// ];
-//
-// app.get("/api/burgers", (req, res) => {
-//   //send all the burgers
-//   res.json(burgers);
-// });
-
-//_______________
-// ROUTES FROM URL
-// http://localhost:3000/greetings/sharon
-// app.get("/greetings/:name", (req, res) => {
-//   res.send( "Hello, " + req.params.name );
-// });
-
-// http://localhost:3000/thank?name=sharon
-app.get("/thank", (req, res) => {
-  let name = req.query.name;
-  res.send('Thank you, ' + name + '!');
-});
-
-// define a root route: localhost:3000/
-app.get('/', (req, res) => {
-  // res.send('Hello World');
-  res.sendFile('views/index.html' , { root : __dirname});
-});
-
 
 // create a new route for GET /api with callback controllers.api.index
 // app.get('/api', controllers.api.index);
 
 
+const designList = [
+    {
+        custom_text: 'Zombies',
+        design_title: 'Pancakes',
+        designer_name: 'Mochi',
+        image: 'images/precision.jpg'
+    }
+];
+
+// define a root route: localhost:3000/
+app.get('/', (req, res) => {
+  // res.send('Hello World');
+//   res.sendFile('views/index.html' , { root : __dirname});
+// });
+    res.sendFile('views/testing.html' , { root : __dirname});
+});
+
+
+
 // DATABASE
-app.get('/api/designs', function (req, res) {
-  // send all books as JSON response
-  db.Design.find(function(err, designs){
+// GET ALL DESIGNS
+app.get('/api/designs', (req, res) => {
+  // send all designs as JSON response
+  db.Design.find( (err, designs) => {
     if (err) {
       console.log("index error: " + err);
       res.sendStatus(500);
     }
+    console.log('Get all ' + designs);
     res.json(designs);
   });
 });
@@ -75,7 +63,10 @@ app.get('/api/designs', function (req, res) {
 app.post('/api/designs', (req, res) => {
       // let newDesign = req.body;
       // newDesign.create( newDesign, (err, newDesignSuccess) => {
-      //     if(err) { return console.log(err) }
+          // if (err) {
+          //   console.log("create error: " + err);
+          //   res.sendStatus(500);
+          // }
       //     res.json(newDesignSuccess);
       // });
       let createDesign = new db.Design ({
@@ -85,15 +76,34 @@ app.post('/api/designs', (req, res) => {
       });
       // create new book in db
       createDesign.save( {}, (err, newDesignSuccess) => {
-          if(err) { return console.log(err) }
+          if (err) {
+            console.log("create error: " + err);
+            res.sendStatus(500);
+          }
+          console.log("SERVER CREATE" + newDesignSuccess);
           res.json(newDesignSuccess);
       });
 });
 
+// get one design
+app.get('/api/designs/:id', (req, res) => {
+});
+
+// update
+app.put('/api/designs/:id', (req, res) => {
+});
+
+// delete
+app.put('/api/designs/:id', (req, res) => {
+});
+
+// searches
+app.get('/api/designs/?q=title', (req, res) => {
+});
 
 //  SERVER --------------------------
 
 // tell the app to listen on a port so that the server will start
-app.listen(process.env.PORT || 3000, function () {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Express server is running on http://localhost:3000/');
 });

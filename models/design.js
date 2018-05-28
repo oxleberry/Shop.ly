@@ -1,15 +1,16 @@
 // design.js
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var DesignSchema = new Schema({
+const DesignSchema = new Schema({
     custom_text: String,
     design_title: String,
-    designer_name: String
+    designer_name: String,
+    image: String
  });
 
 
- var Design = mongoose.model('Design', DesignSchema);
+const Design = mongoose.model('Design', DesignSchema);
 
 
 // Exporting the design
