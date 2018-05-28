@@ -110,9 +110,6 @@ button {
 /* CART ========================================= */
 
 .cart-main {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     margin: 5em;
 }
 

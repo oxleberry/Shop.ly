@@ -7,7 +7,7 @@ var UserSchema = new Schema({
     first_name: String,
     last_name: String,
     phone: String,
-    e-mail: String,
+    e_mail: String,
     address: String,
     // cart will hold any selected _id of add to bag
     cart: []
