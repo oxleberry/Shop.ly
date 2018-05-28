@@ -3,7 +3,7 @@
 function index(req, res) {
   res.json({
     message: 'Welcome to Shop.ly!',
-    documentation_url: 'https://github.com/sf-wdi-labs/Shop.ly',
+    documentation_url: 'https://github.com/oxleberry/Shop.ly',
     base_url: 'localhost:3000',
     endpoints: [
       {
