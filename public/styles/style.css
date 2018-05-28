@@ -149,6 +149,19 @@ button {
     text-align: center;
 }
 
+/* ABOUT ========================================= */
+
+#tee-design {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-size {
+    min-width: 28vw;
+    margin: 1em;
+}
+
 /* FOOTER ========================================= */
 
 footer {
