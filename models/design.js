@@ -1,8 +1,8 @@
 // design.js
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const DesignSchema = new Schema({
+var DesignSchema = new Schema({
     custom_text: String,
     design_title: String,
     designer_name: String,
@@ -10,7 +10,7 @@ const DesignSchema = new Schema({
  });
 
 
-const Design = mongoose.model('Design', DesignSchema);
+ var Design = mongoose.model('Design', DesignSchema);
 
 
 // Exporting the design
