@@ -50,7 +50,16 @@ button {
 
 /* NAV ========================================= */
 
-/* MAIN ========================================= */
+.bg-light {
+    background-color: green;
+}
+
+/* Carousel ================================== */
+.caro-img {
+  height: 100%;
+}
+
+/* MAIN CATEGORY ========================================= */
 
 .outer-cloth-cont {
     padding: 5em 0;
@@ -86,6 +95,11 @@ button {
     /* justify-content: space-between; */
     padding: 1em;
     margin: 1em;
+}
+
+.d-block w-100 {
+  width: 100%;
+
 }
 
 /* SHOW PAGE ========================================= */
