@@ -44,7 +44,7 @@ main {
     min-height: 90vh;
 }
 
-button {
+button, h6 {
     text-transform: uppercase;
 }
 
