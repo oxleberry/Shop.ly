@@ -11,8 +11,9 @@ const designList = [
 
 
 $(function() {
-    console.log('Sanity Check');
+    console.log('Sanity Check :)');
 
+    // category page
     $.ajax({
       method: 'GET',
       url: '/api/shirts',
@@ -20,6 +21,23 @@ $(function() {
       error: handleError
     });
 
+// category page
+// when button is clicked, find data-attr
+// use data-attr to find shirt:_id
+// populate the show details section with that info.
+
+    // $('#show-button').on('submit', (e) => {
+    //   e.preventDefault();
+    //       console.log('Button Click');
+    //   $.ajax({
+    //     method: 'GET',
+    //     url: '/api/shirts',
+    //     success: showSuccess,
+    //     error: handleError
+    //   });
+    // });
+
+// testing create
     $('#testing').on('submit', (e) => {
       e.preventDefault();
       $.ajax({
@@ -32,30 +50,71 @@ $(function() {
     });
 
 
-
 }); // end of document.ready
 
-// populates seed data
+
+
+// populates seed data on category page
 function handleSuccess(json) {
     console.log("loaded success");
     console.log(json);
     // var shirt = json;
     json.forEach((el, idx) => {
-        const showShirt = `
+        const cateShirt = `
         <div class="card card-size">
           <img class="card-img-top" src="images/${el.image}" alt="tee-design">
           <div class="card-body">
             <h5 class="card-title">${el.name}</h5>
             <p class="card-text">${el.price}</p>
-            <p class="card-text">${el.description}</p>
-            <button class="btn btn-primary">Buy</button>
+            <button data-id="${el._id}"class="btn btn-primary">Buy</button>
           </div>
         </div>
         `;
-        $('#tee-design').append(showShirt);
+        $('#tee-design').append(cateShirt);
+
+
+        // when THIS button is clicked,
+        // grap the data-id associated with that shirt
+        $('button').on('click', function() {
+            var butAttr = $(this).attr('data-id');
+            console.log(butAttr);
+
+            // append that shirts data SHOW-DETAIL info
+
+        });
+
     });
 }
 
+// populates seed data on category page
+function showSuccess(el) {
+    console.log("show success");
+    // console.log(el);
+    // var shirt = json;
+    // const showShirt = `
+    //     <div class="show-image">
+    //       <img src="images/${el.image}" alt="tee-design">
+    //     </div>
+    //     <div class="show-details">
+    //         <h6>${el.name}</h6>
+    //         <h6>${el.price}</h6>
+    //         <div class="cont-row show-text">
+    //             <h6>Size</h6>
+    //             <p>XS</p>
+    //             <p>S</p>
+    //             <p>M</p>
+    //             <p>L</p>
+    //             <p>XL</p>
+    //             <p>XXL</p>
+    //         </div>
+    //         <button type="button" class="btn btn-outline-secondary">add to bag</button>
+    //         <h6>${el.description}</h6>
+    //     </div>
+    // `;
+    // $('#show-show').append(showShirt);
+}
+
+// Create Posts
 function newDesignSuccess(shirt) {
   // $('#newBookForm input').val('');
   console.log("created success");
@@ -70,6 +129,7 @@ function handleError(e) {
   console.log('uh oh');
 }
 
+// Create Posts
 function renderNewDesign(design) {
     console.log(design);
     console.log(designList[0]);

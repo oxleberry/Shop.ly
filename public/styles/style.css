@@ -104,13 +104,20 @@ button {
 
 /* SHOW PAGE ========================================= */
 
+.outer-show-cont {
+    margin: 5em;
+    height: 70vh;
+}
+
 .show-image {
-    margin: 0 2em;
     width: 50%;
 }
 
+.show-image img{
+    width: 100%;
+}
+
 .show-details {
-    margin: 0 2em;
     padding: 2em;
     width: 50%;
     background-color: #ccc;

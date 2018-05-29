@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // create a new route for GET /api with callback controllers.api.index
 // app.get('/api', controllers.api.index);
 
-// 
+//
 // const designList = [
 //     {
 //         custom_text: 'Zombies',
@@ -89,8 +89,17 @@ app.post('/api/shirts', (req, res) => {
 app.get('/api/shirts/:id', (req, res) => {
 });
 
-// update
+// update for show page
 app.put('/api/shirts/:id', (req, res) => {
+    // get todo id from url params (`req.params`)
+    // let shirtId = req.params.id;
+    // // get update body from req.body
+    // let updateBody = req.body;
+    // // find and update the todos's attributes
+    // db.Shirt.findOneAndUpdate({ _id: shirtId }, updateBody, {new:true}, (err, updatedShirt) => {
+    //     if(err) { return console.log(err) }
+    //     res.json(updatedShirt);
+    // });
 });
 
 // delete
