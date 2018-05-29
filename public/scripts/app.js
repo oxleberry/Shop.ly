@@ -38,16 +38,16 @@ $(function() {
     // });
 
 // testing create
-    $('#testing').on('submit', (e) => {
-      e.preventDefault();
-      $.ajax({
-        method: 'POST',
-        url: '/api/shirts',
-        data: $(this).serialize(),
-        success: newDesignSuccess,
-        error: handleError
-      });
-    });
+    // $('#testing').on('submit', (e) => {
+    //   e.preventDefault();
+    //   $.ajax({
+    //     method: 'POST',
+    //     url: '/api/shirts',
+    //     data: $(this).serialize(),
+    //     success: newDesignSuccess,
+    //     error: handleError
+    //   });
+    // });
 
 
 }); // end of document.ready
@@ -70,20 +70,29 @@ function handleSuccess(json) {
           </div>
         </div>
         `;
+
         $('#tee-design').append(cateShirt);
-
-
-        // when THIS button is clicked,
-        // grap the data-id associated with that shirt
-        $('button').on('click', function() {
-            var butAttr = $(this).attr('data-id');
-            console.log(butAttr);
-
-            // append that shirts data SHOW-DETAIL info
 
         });
 
-    });
+        // when THIS button is clicked,
+        // grap the data-id associated with that shirt
+        $('button').on('click', $('#tee-design'), function() {
+            var buttonAttr = $(this).attr('data-id');
+            console.log(buttonAttr);
+            var detailUrl = `/api/shirts/${buttonAttr}`;
+
+            // append that shirts data SHOW-DETAIL info
+            $.ajax({
+              method: 'GET',
+              // url: '/api/shirts/:id',
+              url: detailUrl,
+              success: detailsSuccess,
+              error: handleError
+            });
+
+
+    }); // end of forEach
 }
 
 // populates seed data on category page
@@ -114,15 +123,9 @@ function showSuccess(el) {
     // $('#show-show').append(showShirt);
 }
 
-// Create Posts
-function newDesignSuccess(shirt) {
-  // $('#newBookForm input').val('');
-  console.log("created success");
-  renderNewDesign(shirt);
-}
-
-function getDesignHtml(shirt) {
-
+function detailsSuccess(shirt) {
+    console.log("details success");
+    // console.log(shirt);
 }
 
 function handleError(e) {
