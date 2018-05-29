@@ -54,7 +54,7 @@ app.get('/api/shirts', (req, res) => {
       console.log("index error: " + err);
       res.sendStatus(500);
     }
-    console.log('Get all ' + shirts);
+    // console.log('Get all ' + shirts);
     res.json(shirts);
   });
 });
@@ -80,18 +80,39 @@ app.post('/api/shirts', (req, res) => {
             console.log("create error: " + err);
             res.sendStatus(500);
           }
-          console.log("SERVER CREATE" + newDesignSuccess);
+          // console.log("SERVER CREATE" + newDesignSuccess);
           res.json(newDesignSuccess);
       });
 });
 
 // get one design
+
+// based on the button: data-id
+// find that shirt in the database
+// res, send that data to app.js
+
 app.get('/api/shirts/:id', (req, res) => {
+
+    // find shirt by button data-attr:
+    let shirtId = req.params.id;
+    console.log("FINDING SHIRT");
+    console.log(shirtId);
+
+
+    // find shirt in db by id
+    db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
+        if(err) { return console.log(err) }
+        console.log("found one");
+        res.json(foundShirt);
+    });
+
+
 });
 
-// update for show page
+// update
 app.put('/api/shirts/:id', (req, res) => {
-    // get todo id from url params (`req.params`)
+
+    // // get todo id from url params (`req.params`)
     // let shirtId = req.params.id;
     // // get update body from req.body
     // let updateBody = req.body;
@@ -103,7 +124,7 @@ app.put('/api/shirts/:id', (req, res) => {
 });
 
 // delete
-app.put('/api/shirts/:id', (req, res) => {
+app.delete('/api/shirts/:id', (req, res) => {
 });
 
 // searches
