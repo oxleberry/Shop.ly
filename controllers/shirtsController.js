@@ -1,42 +1,28 @@
 
 
-var shirts = [{
-  _id: 132,
-  name: 'precision',
-  xs: 0,
-  s: 1,
-  m: 3,
-  l: 4,
-  xl: 3,
-  xxl: 4,
-  price: 20,
-  images: '../public/images/precision.jpg',
-  description: 'T-shirt are 100% organic cotton. Ethically sourced'
+const shirtList = [{
+    name: 'precision',
+    price: 19.99,
+    image: 'precision.jpg',
+    size: [0, 1, 3, 4, 2, 4],
+    // size: { xs:0, s:1, m:3, L:4, XL:2, XXL:4 },
+    description: 'T-shirt are 100% organic cotton. Ethically sourced'
 }, {
-  _id: 133,
-  artistName: 'bad',
-  xs: 3,
-  s: 4,
-  m: 3,
-  l: 4,
-  xl: 3,
-  xxl: 0,
-  price: 20,
-  images: '../public/images/bad.jpg',
-  description: 'T-shirt are 100% organic cotton. Ethically sourced'
+    name: 'bad',
+    price: 18.99,
+    image: 'bad.jpg',
+    size: [1, 4, 3, 2, 3, 0],
+    // size: { xs:1, s:4, m:3, L:2, XL:3, XXL:0 },
+    description: 'T-shirt are 100% organic cotton. Ethically sourced'
 }, {
-  _id: 134,
-  artistName: 'solve problems',
-  xs: 3,
-  s: 4,
-  m: 1,
-  l: 4,
-  xl: 3,
-  xxl: 4,
-  price: 20,
-  images: '../public/images/solve.jpg',
-  description: 'T-shirt are 100% organic cotton. Ethically sourced'
+    name: 'solve problems',
+    price: 19.99,
+    image: 'solve.jpg',
+    size: [3, 0, 1, 2, 3, 4],
+    // size: { xs:3, s:0, m:1, L:2, XL:3, XXL:4 },
+    description: 'T-shirt are 100% organic cotton. Ethically sourced'
 }];
+
 
 
 
