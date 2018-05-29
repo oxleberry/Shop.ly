@@ -56,8 +56,8 @@ $(function() {
 
 // populates seed data on category page
 function handleSuccess(json) {
-    console.log("loaded success");
-    console.log(json);
+    // console.log("loaded success");
+    // console.log(json);
     // var shirt = json;
     json.forEach((el, idx) => {
         const cateShirt = `
@@ -79,7 +79,7 @@ function handleSuccess(json) {
         // grap the data-id associated with that shirt
         $('button').on('click', $('#tee-design'), function() {
             var buttonAttr = $(this).attr('data-id');
-            console.log(buttonAttr);
+            // console.log(buttonAttr);
             var detailUrl = `/api/shirts/${buttonAttr}`;
 
             // append that shirts data SHOW-DETAIL info
@@ -124,8 +124,31 @@ function showSuccess(el) {
 }
 
 function detailsSuccess(shirt) {
-    console.log("details success");
+    // console.log("details success");
     // console.log(shirt);
+    $('#show-show').empty();
+    // populate shirt details section
+    const detailsShirt = `
+    <div class="show-image">
+      <img src="images/${shirt.image}" alt="">
+    </div>
+    <div class="show-details">
+        <h6>${shirt.name}</h6>
+        <h6>${shirt.price}</h6>
+        <div class="cont-row show-text">
+            <h6>Size</h6>
+            <p>XS: ${shirt.size[0]}</p>
+            <p>S: ${shirt.size[1]}</p>
+            <p>M: ${shirt.size[2]}</p>
+            <p>L: ${shirt.size[3]}</p>
+            <p>XL: ${shirt.size[4]}</p>
+            <p>XXL: ${shirt.size[5]}</p>
+        </div>
+        <button type="button" class="btn btn-outline-secondary">add to bag</button>
+        <p>${shirt.description}</p>
+    </div>
+    `;
+    $('#show-show').append(detailsShirt);
 }
 
 function handleError(e) {
