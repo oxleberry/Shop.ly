@@ -158,8 +158,8 @@ button {
 }
 
 .card-size {
-    min-width: 28vw;
-    margin: 1em;
+    width: 30%;
+    margin: .5em;
 }
 
 /* FOOTER ========================================= */

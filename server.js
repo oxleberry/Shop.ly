@@ -25,42 +25,42 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // create a new route for GET /api with callback controllers.api.index
 // app.get('/api', controllers.api.index);
 
-
-const designList = [
-    {
-        custom_text: 'Zombies',
-        design_title: 'Pancakes',
-        designer_name: 'Mochi',
-        image: 'images/precision.jpg'
-    }
-];
+// 
+// const designList = [
+//     {
+//         custom_text: 'Zombies',
+//         design_title: 'Pancakes',
+//         designer_name: 'Mochi',
+//         image: 'images/precision.jpg'
+//     }
+// ];
 
 // define a root route: localhost:3000/
 app.get('/', (req, res) => {
   // res.send('Hello World');
 //   res.sendFile('views/index.html' , { root : __dirname});
 // });
-    res.sendFile('views/testing.html' , { root : __dirname});
+    res.sendFile('views/category.html' , { root : __dirname});
 });
 
 
 
 // DATABASE
-// GET ALL DESIGNS
-app.get('/api/designs', (req, res) => {
-  // send all designs as JSON response
-  db.Design.find( (err, designs) => {
+// GET ALL SHIRTS
+app.get('/api/shirts', (req, res) => {
+  // send all shirts as JSON response
+  db.Shirt.find( (err, shirts) => {
     if (err) {
       console.log("index error: " + err);
       res.sendStatus(500);
     }
-    console.log('Get all ' + designs);
-    res.json(designs);
+    console.log('Get all ' + shirts);
+    res.json(shirts);
   });
 });
 
 // CREATE
-app.post('/api/designs', (req, res) => {
+app.post('/api/shirts', (req, res) => {
       // let newDesign = req.body;
       // newDesign.create( newDesign, (err, newDesignSuccess) => {
           // if (err) {
@@ -86,19 +86,19 @@ app.post('/api/designs', (req, res) => {
 });
 
 // get one design
-app.get('/api/designs/:id', (req, res) => {
+app.get('/api/shirts/:id', (req, res) => {
 });
 
 // update
-app.put('/api/designs/:id', (req, res) => {
+app.put('/api/shirts/:id', (req, res) => {
 });
 
 // delete
-app.put('/api/designs/:id', (req, res) => {
+app.put('/api/shirts/:id', (req, res) => {
 });
 
 // searches
-app.get('/api/designs/?q=title', (req, res) => {
+app.get('/api/shirts/?q=title', (req, res) => {
 });
 
 //  SERVER --------------------------

@@ -1,25 +1,25 @@
 
 // shirt.js
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var ShirtSchema = new Schema({
+const ShirtSchema = new Schema({
     name: String,
-    xs: Number,
-    s: Number,
-    m: Number,
-    l: Number,
-    xl: Number,
-    xxl: Number,
-    // size: [],
-    // color: String,
     price: Number,
     image: String,
+    // xs: Number,
+    // s: Number,
+    // m: Number,
+    // l: Number,
+    // xl: Number,
+    // xxl: Number,
+    size: [Number],
+    // color: String,
     description: String
  });
 
  // shirt.js
- var Shirt = mongoose.model('Shirt', ShirtSchema);
+ const Shirt = mongoose.model('Shirt', ShirtSchema);
 
 
 

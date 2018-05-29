@@ -2,7 +2,9 @@
 
 const mongoose = require("mongoose");
 // path where the database will go
+mongoose.connect("mongodb://localhost/shirts");
 mongoose.connect("mongodb://localhost/designs");
+
 
 // const Design = require('./design');
 // exports.Design = Design;
