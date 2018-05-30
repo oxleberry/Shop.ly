@@ -100,18 +100,18 @@ app.get('/api/shirts/:id', (req, res) => {
 });
 
 // get one design for cart section
-app.get('/api/shirts/:id', (req, res) => {
-    // find shirt by button data-attr:
-    let shirtId = req.params.id;
-    console.log("FINDING SHIRT");
-    console.log(shirtId);
-    // find shirt in db by id
-    db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
-        if(err) { return console.log(err) }
-        console.log("found one");
-        res.json(foundShirt);
-    });
-});
+// app.get('/api/shirts/:id', (req, res) => {
+//     // find shirt by button data-attr:
+//     let shirtId = req.params.id;
+//     console.log("FINDING SHIRT");
+//     console.log(shirtId);
+//     // find shirt in db by id
+//     db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
+//         if(err) { return console.log(err) }
+//         console.log("found one");
+//         res.json(foundShirt);
+//     });
+// });
 
 // update
 app.put('/api/shirts/:id', (req, res) => {
