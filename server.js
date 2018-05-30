@@ -85,28 +85,32 @@ app.post('/api/shirts', (req, res) => {
       });
 });
 
-// get one design
-
-// based on the button: data-id
-// find that shirt in the database
-// res, send that data to app.js
-
+// get one design for details section
 app.get('/api/shirts/:id', (req, res) => {
-
     // find shirt by button data-attr:
     let shirtId = req.params.id;
     console.log("FINDING SHIRT");
     console.log(shirtId);
-
-
     // find shirt in db by id
     db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
         if(err) { return console.log(err) }
         console.log("found one");
         res.json(foundShirt);
     });
+});
 
-
+// get one design for cart section
+app.get('/api/shirts/:id', (req, res) => {
+    // find shirt by button data-attr:
+    let shirtId = req.params.id;
+    console.log("FINDING SHIRT");
+    console.log(shirtId);
+    // find shirt in db by id
+    db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
+        if(err) { return console.log(err) }
+        console.log("found one");
+        res.json(foundShirt);
+    });
 });
 
 // update

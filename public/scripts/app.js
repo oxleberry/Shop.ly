@@ -1,4 +1,6 @@
 
+let currentCart = [];
+let currentTotal = [];
 
 const designList = [
     {
@@ -17,45 +19,17 @@ $(function() {
     $.ajax({
       method: 'GET',
       url: '/api/shirts',
-      success: handleSuccess,
+      success: loadSuccess,
       error: handleError
     });
-
-// category page
-// when button is clicked, find data-attr
-// use data-attr to find shirt:_id
-// populate the show details section with that info.
-
-    // $('#show-button').on('submit', (e) => {
-    //   e.preventDefault();
-    //       console.log('Button Click');
-    //   $.ajax({
-    //     method: 'GET',
-    //     url: '/api/shirts',
-    //     success: showSuccess,
-    //     error: handleError
-    //   });
-    // });
-
-// testing create
-    // $('#testing').on('submit', (e) => {
-    //   e.preventDefault();
-    //   $.ajax({
-    //     method: 'POST',
-    //     url: '/api/shirts',
-    //     data: $(this).serialize(),
-    //     success: newDesignSuccess,
-    //     error: handleError
-    //   });
-    // });
 
 
 }); // end of document.ready
 
 
 
-// populates seed data on category page
-function handleSuccess(json) {
+// populates category page from database
+function loadSuccess(json) {
     // console.log("loaded success");
     // console.log(json);
     // var shirt = json;
@@ -66,67 +40,42 @@ function handleSuccess(json) {
           <div class="card-body">
             <h5 class="card-title">${el.name}</h5>
             <p class="card-text">${el.price}</p>
-            <button data-id="${el._id}"class="btn btn-primary">Buy</button>
+            <button data-id="${el._id}" class="btn btn-primary btn-category">See Detail</button>
           </div>
         </div>
         `;
-
         $('#tee-design').append(cateShirt);
-
+    });
+    // when each shirt button is clicked,
+    // grap the data-id associated with that shirt
+    $('.btn-category').on('click', $('#tee-design'), function() {
+        var cateBtnAttr = $(this).attr('data-id');
+        // console.log(cateBtnAttr);
+        var detailUrl = `/api/shirts/${cateBtnAttr}`;
+        // append that shirts data SHIRT-DETAIL info
+        $.ajax({
+          method: 'GET',
+          // url: '/api/shirts/:id',
+          url: detailUrl,
+          success: detailsSuccess,
+          error: handleError
         });
-
-        // when THIS button is clicked,
-        // grap the data-id associated with that shirt
-        $('button').on('click', $('#tee-design'), function() {
-            var buttonAttr = $(this).attr('data-id');
-            // console.log(buttonAttr);
-            var detailUrl = `/api/shirts/${buttonAttr}`;
-
-            // append that shirts data SHOW-DETAIL info
-            $.ajax({
-              method: 'GET',
-              // url: '/api/shirts/:id',
-              url: detailUrl,
-              success: detailsSuccess,
-              error: handleError
-            });
-
-
-    }); // end of forEach
+    });
 }
 
-// populates seed data on category page
-function showSuccess(el) {
-    console.log("show success");
-    // console.log(el);
-    // var shirt = json;
-    // const showShirt = `
-    //     <div class="show-image">
-    //       <img src="images/${el.image}" alt="tee-design">
-    //     </div>
-    //     <div class="show-details">
-    //         <h6>${el.name}</h6>
-    //         <h6>${el.price}</h6>
-    //         <div class="cont-row show-text">
-    //             <h6>Size</h6>
-    //             <p>XS</p>
-    //             <p>S</p>
-    //             <p>M</p>
-    //             <p>L</p>
-    //             <p>XL</p>
-    //             <p>XXL</p>
-    //         </div>
-    //         <button type="button" class="btn btn-outline-secondary">add to bag</button>
-    //         <h6>${el.description}</h6>
-    //     </div>
-    // `;
-    // $('#show-show').append(showShirt);
-}
+// WHEN SEE DETAILS BUTTON IS CLICKED
 
+// loop through shirt.size
+// (change p tags to buttons)
+// if the size quantity is < 1
+    // toggle class active, which hides button tag
+
+
+// populates details section
 function detailsSuccess(shirt) {
     // console.log("details success");
     // console.log(shirt);
-    $('#show-show').empty();
+    $('#tee-show').empty();
     // populate shirt details section
     const detailsShirt = `
     <div class="show-image">
@@ -144,12 +93,41 @@ function detailsSuccess(shirt) {
             <p>XL: ${shirt.size[4]}</p>
             <p>XXL: ${shirt.size[5]}</p>
         </div>
-        <button type="button" class="btn btn-outline-secondary">add to bag</button>
+        <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
         <p>${shirt.description}</p>
     </div>
     `;
-    $('#show-show').append(detailsShirt);
+    $('#tee-show').append(detailsShirt);
+
+    // WHEN ADD TO BAG BUTTON IS CLICKED
+    // get that bag's data-id attr
+    // decrement the inventory from that items size
+    // use that attr to
+        // add the shopping cart with the data
+        // add to current cart and current total
+
+    $('.btn-detail').on('click', function() {
+        console.log('CART BUTTON CLICKED');
+        var detailBtnAttr = $(this).attr('data-id');
+        console.log(detailBtnAttr);
+        var cartUrl = `/api/shirts/${detailBtnAttr}`;
+        // append that shirts data SHIRT-DETAIL info
+        $.ajax({
+          method: 'GET',
+          // url: '/api/shirts/:id',
+          url: cartUrl,
+          success: cartSuccess,
+          error: handleError
+      });
+
+
+    });
 }
+
+function cartSuccess() {
+        console.log('CART SUCCESS');
+}
+
 
 function handleError(e) {
   console.log('uh oh');

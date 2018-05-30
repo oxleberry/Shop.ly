@@ -131,7 +131,7 @@ p {
 }
 
 .show-image img{
-    width: 100%;
+    height: 100%;
 }
 
 .show-details {
@@ -149,6 +149,12 @@ p {
 
 .cart-main {
     margin: 5em;
+}
+
+.cart-img {
+    height: 8em;
+    float: right;
+    padding: 1em 3em 1em 1em;
 }
 
 .form-space-left{
@@ -171,12 +177,16 @@ p {
     justify-content: center;
 }
 
-.cart-item {
+#cart-item {
     border-top: solid 1px #ccc;
 }
 
 .cart-delete {
     float: right;
+}
+
+.quantity-flex {
+    justify-content: space-between;
 }
 
 /* ABOUT ========================================= */
