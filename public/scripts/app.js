@@ -104,11 +104,6 @@ function detailsSuccess(shirt) {
     </div>
     `;
     $('#tee-show').append(detailsShirt);
-
-        // CART
-        // iterate through cart
-        // populate cart section with data of each shirt.
-
     $('.btn-detail').on('click', function() {
         console.log('CART BUTTON CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
@@ -132,8 +127,8 @@ function detailsSuccess(shirt) {
 // decrement the inventory from that items size
 // use that attr to
 
-// add the shopping cart with the button id
 // add to current cart and current total
+// when add to bag is clicked
 function cartSuccess(shirt) {
     // console.log('CART SUCCESS');
     // console.log(shirt);
@@ -143,11 +138,38 @@ function cartSuccess(shirt) {
     // console.log(shirtPrice);
     currentCart.push(shirtId);
     currentTotal.push(shirtPrice);
-    console.log(currentCart);
-    console.log(currentTotal);
-
+    // console.log(currentCart);
+    // console.log(currentTotal);
+    populateCart(shirt);
 }
 
+// populate cart section with data of each shirt
+// when add to bag is clicked
+function populateCart(shirt) {
+    console.log("POPULATING CART");
+    var updateCart = `
+    <button class="cart-delete">x</button>
+    <img class="cart-img" src="images/${shirt.image}" alt="">
+    <p>${shirt.name}</p>
+    <p>${shirt.price}</p>
+    <div class="form-group cont-row quantity-flex">
+      <div>
+          <label for="cart-quantity">Quantity</label>
+      </div>
+      <div>
+          <select class="form-control" id="cart-quantity">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+          </select>
+      </div>
+      <button>update</button>
+    </div>
+    <hr>
+    `;
+
+    $('#cart-item').append(updateCart);
+};
 
 function handleError(e) {
     console.log('uh oh');
