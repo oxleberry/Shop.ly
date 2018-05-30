@@ -55,6 +55,7 @@ h2 {
 
 p {
     font-family: 'Philosopher', sans-serif;
+    font-size: 1.2em;
 }
 
 /* NAV ========================================= */
@@ -65,7 +66,23 @@ p {
 
 .site-title {
     font-size: 5em;
-    color:
+    margin-left: .8em;
+}
+
+.nav-margin-home {
+    margin-left: 4em;
+    font-size: 1.5em;
+    letter-spacing: .2rem;
+}
+
+.nav-margin-about {
+    margin-left: 3em;
+    letter-spacing: .2rem;
+}
+
+.nav-margin-shirts {
+    margin-left: 3em;
+    letter-spacing: .2rem;
 }
 
 .cart-icon {
@@ -86,6 +103,7 @@ p {
 .cloth-cont {
     width: 100%;
     padding-bottom: 5em;
+    flex: 2;
 }
 
 .cloth-cont:last-child {
@@ -93,14 +111,25 @@ p {
 }
 
 .cloth-caro {
-    background-color: #524b4b;
-    height: 30em;
+    background-color: #A7FFEB;
     width: 70%;
+    display: flex;
 }
 
 .cloth-side {
     background-color: white;
     width: 30%;
+}
+
+.mainShirtText {
+    flex: 1;
+    padding: 2em;
+}
+
+.mainShirtTitle {
+  text-align: center;
+  margin-top: 1.5em;
+  letter-spacing: .2rem;
 }
 
 /* MAIN CATEGORY PAGE ========================================= */
@@ -198,10 +227,15 @@ p {
     text-align: center;
 }
 
+#aboutFont {
+    letter-spacing: .2rem;
+}
+
 /* ABOUT ========================================= */
 
 #about {
     background-color: #64FFDA;
+    padding: 3em;
 }
 
 #tee-design {
