@@ -30,8 +30,8 @@ $(function() {
 
 // populates category page from database
 function loadSuccess(json) {
-    // console.log("loaded success");
-    // console.log(json);
+    console.log("loaded success");
+    console.log(json);
     // var shirt = json;
     json.forEach((el, idx) => {
         const cateShirt = `
@@ -54,6 +54,12 @@ function loadSuccess(json) {
         var detailUrl = `/api/shirts/${cateBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
+
+          beforeSend: function(){
+                 // Handle the beforeSend event
+          },
+
+
           method: 'GET',
           // url: '/api/shirts/:id',
           url: detailUrl,
@@ -99,12 +105,9 @@ function detailsSuccess(shirt) {
     `;
     $('#tee-show').append(detailsShirt);
 
-    // WHEN ADD TO BAG BUTTON IS CLICKED
-    // get that bag's data-id attr
-    // decrement the inventory from that items size
-    // use that attr to
-        // add the shopping cart with the data
-        // add to current cart and current total
+        // CART
+        // iterate through cart
+        // populate cart section with data of each shirt.
 
     $('.btn-detail').on('click', function() {
         console.log('CART BUTTON CLICKED');
@@ -124,13 +127,30 @@ function detailsSuccess(shirt) {
     });
 }
 
-function cartSuccess() {
-        console.log('CART SUCCESS');
+// WHEN ADD TO BAG BUTTON IS CLICKED
+
+// decrement the inventory from that items size
+// use that attr to
+
+// add the shopping cart with the button id
+// add to current cart and current total
+function cartSuccess(shirt) {
+    // console.log('CART SUCCESS');
+    // console.log(shirt);
+    var shirtId = shirt._id;
+    var shirtPrice = shirt.price;
+    // console.log(shirtId);
+    // console.log(shirtPrice);
+    currentCart.push(shirtId);
+    currentTotal.push(shirtPrice);
+    console.log(currentCart);
+    console.log(currentTotal);
+
 }
 
 
 function handleError(e) {
-  console.log('uh oh');
+    console.log('uh oh');
 }
 
 // Create Posts
