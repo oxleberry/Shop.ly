@@ -25,6 +25,12 @@ $(function() {
       success: loadSuccess,
       error: handleError
     });
+    $.ajax({
+      method: 'GET',
+      url: '/api/users',
+      success: userSuccess,
+      error: handleError
+    });
 
 
 }); // end of document.ready
@@ -43,7 +49,7 @@ function loadSuccess(json) {
           <div class="card-body">
             <h5 class="card-title">${el.name}</h5>
             <p class="card-text">$ ${el.price}</p>
-            <button data-id="${el._id}" class="btn btn-primary btn-category">See Detail</button>
+            <a href="#tee-show" <button data-id="${el._id}" class="btn btn-primary btn-category">See Detail</button></a>
           </div>
         </div>
         `;
@@ -103,12 +109,12 @@ function detailsSuccess(shirt) {
         <h4 class="showDetailsPrice">$ ${shirt.price}</h4>
         <div class="cont-row show-text">
             <h3 class="showDetailsSize">Size</h3>
-            <button data-idx="0" type="button" class="btn btn-primary btn-sm btnShirtSize size">XS: ${shirt.size[0]}</button>
-            <button data-idx="1" type="button" class="btn btn-primary btn-sm btnShirtSize size">S: ${shirt.size[1]}</button>
-            <button data-idx="2" type="button" class="btn btn-primary btn-sm btnShirtSize size">M: ${shirt.size[2]}</button>
-            <button data-idx="3" type="button" class="btn btn-primary btn-sm btnShirtSize size">L: ${shirt.size[3]}</button>
-            <button data-idx="4" type="button" class="btn btn-primary btn-sm btnShirtSize size">XL: ${shirt.size[4]}</button>
-            <button data-idx="5" type="button" class="btn btn-primary btn-sm btnShirtSize size">XXL: ${shirt.size[5]}</button>
+            <button data-idx="0" type="button" class="btn btn-primary btn-md btnShirtSize size">XS: ${shirt.size[0]}</button>
+            <button data-idx="1" type="button" class="btn btn-primary btn-md btnShirtSize size">S: ${shirt.size[1]}</button>
+            <button data-idx="2" type="button" class="btn btn-primary btn-md btnShirtSize size">M: ${shirt.size[2]}</button>
+            <button data-idx="3" type="button" class="btn btn-primary btn-md btnShirtSize size">L: ${shirt.size[3]}</button>
+            <button data-idx="4" type="button" class="btn btn-primary btn-md btnShirtSize size">XL: ${shirt.size[4]}</button>
+            <button data-idx="5" type="button" class="btn btn-primary btn-md btnShirtSize size">XXL: ${shirt.size[5]}</button>
         </div>
         <div class="form-group cont-row">
           <div class="showDetailsQuantity">
@@ -271,30 +277,59 @@ function invSuccess(json) {
     // console.log(json.size[selSizeQty]);
 }
 
+// Create Posts
+// function renderNewDesign(design) {
+//     console.log(design);
+//     console.log(designList[0]);
+//     var showDesign = `
+//     <div class="card card-size">
+//       <img class="card-img-top" src="images/${designList[0].image}" alt="tee-design">
+//       <div class="card-body">
+//         <h5 class="card-title">${designList[0].design_title}</h5>
+//         <p class="card-text">${designList[0].custom_text}</p>
+//         <p class="card-text">${designList[0].designer_name}</p>
+//         <button class="btn btn-primary">Buy</button>
+//         <button class="btn btn-primary">Update</button>
+//         <button class="btn btn-primary">x</button>
+//       </div>
+//     </div>
+//     `;
+//
+//     $('#testing').append(showDesign);
+// }
 
-function handleError(e) {
-    console.log('uh oh');
+// WHEN CHECKOUT BUTTON IS CLICKED
+function userSuccess(json) {
+    console.log("USER DATA");
+    console.log(json);
+
+    $('#cart-form').on('submit', function(e) {
+        e.preventDefault();
+        saveUser();
+
+    });
+
+
 }
 
-// Create Posts
-function renderNewDesign(design) {
-    console.log(design);
-    console.log(designList[0]);
-    var showDesign = `
-    <div class="card card-size">
-      <img class="card-img-top" src="images/${designList[0].image}" alt="tee-design">
-      <div class="card-body">
-        <h5 class="card-title">${designList[0].design_title}</h5>
-        <p class="card-text">${designList[0].custom_text}</p>
-        <p class="card-text">${designList[0].designer_name}</p>
-        <button class="btn btn-primary">Buy</button>
-        <button class="btn btn-primary">Update</button>
-        <button class="btn btn-primary">x</button>
-      </div>
-    </div>
-    `;
+// when checkout button is clicked
+// save user account info
 
-    $('#testing').append(showDesign);
+// Create Posts
+function saveUser() {
+    console.log("CREATING USER");
+    $.ajax({
+      method: 'POST',
+      url: '/api/users',
+      data: $(this).serialize(),
+      success: saveUserSuccess,
+      error: handleError
+    });
+}
+
+//save User contact info in db
+function saveUserSuccess(json){
+    console.log(json);
 }
 
 function calcTotal() {
@@ -304,4 +339,8 @@ function calcTotal() {
     // return currentTotal;
 
     $('.total').text(`Total: $ ${numTotal}`);
+}
+
+function handleError(e) {
+    console.log('uh oh');
 }

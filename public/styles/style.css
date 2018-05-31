@@ -153,7 +153,7 @@ p {
 
 .outer-show-cont {
     margin: 5em;
-    height: 70vh;
+    /* height: 70vh; */
 }
 
 .show-image {
@@ -254,7 +254,7 @@ p {
 }
 
 #tee-show {
-    background-color: #f2f2f2;
+    background-color: #c4f7eb;
 }
 
 .outOfStock {
@@ -296,7 +296,6 @@ p {
     border-radius: 1em;
     width: 100%;
     justify-content: center;
-
 }
 
 #cart-item {
@@ -345,6 +344,15 @@ p {
 
 .btnCheckout:hover {
     background-color: #a8abaa;
+}
+
+.outer-thanks-cont {
+    margin: 5em;
+    /* height: 20em; */
+    background-color: #c4f7eb;
+    text-align: center;
+    padding: 2em;
+
 }
 
 /* ABOUT ========================================= */

@@ -6,17 +6,17 @@ const db = require("./models");
 
 
 
-const designList = [{
-    custom_text: 'Zombies',
-    design_title: 'Pancakes',
-    designer_name: 'Mochi',
-    image: 'precision.jpg'
-}, {
-    custom_text: 'Bunnies',
-    design_title: 'Waffles',
-    designer_name: 'Seasames',
-    image: 'solve.jpg'
-}];
+// const designList = [{
+//     custom_text: 'Zombies',
+//     design_title: 'Pancakes',
+//     designer_name: 'Mochi',
+//     image: 'precision.jpg'
+// }, {
+//     custom_text: 'Bunnies',
+//     design_title: 'Waffles',
+//     designer_name: 'Seasames',
+//     image: 'solve.jpg'
+// }];
 
 
 const shirtList = [{
@@ -76,6 +76,17 @@ const shirtList = [{
 }];
 
 
+const userList = [{
+    first_name: 'Paul',
+    last_name: 'Smith',
+    phone: 'xxx-xxx-xxxx',
+    e_mail: 'smithy@smail.com',
+    address: '123 BlueJay Way',
+    // cart will hold any selected _id of add to bag
+    cart: []
+    // purchase_id: Number
+}];
+
 
 db.Shirt.remove({}, (err, shirts) => {
     if(err) {
@@ -94,16 +105,16 @@ db.Shirt.remove({}, (err, shirts) => {
 });
 
 
-db.Design.remove({}, function(err, designs){
+db.User.remove({}, function(err, users){
     if(err) {
         console.log('Error occurred in remove', err);
     } else {
-        db.Design.create(designList, function(err, designs){
+        db.User.create(userList, function(err, users){
             if (err) {
                 console.log("create seed error: " + err);
                 res.sendStatus(500);
             }
-            console.log("created", designs.length, "designs");
+            console.log("created", users.length, "users");
             process.exit();
         });
     }
