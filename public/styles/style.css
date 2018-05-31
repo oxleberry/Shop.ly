@@ -219,6 +219,11 @@ p {
     justify-content: space-between;
 }
 
+.outOfStock {
+    /* display: none; */
+    opacity: 0;
+}
+
 /* ABOUT ========================================= */
 
 #about {
