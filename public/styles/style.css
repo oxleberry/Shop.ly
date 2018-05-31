@@ -32,6 +32,14 @@ body {
     flex-direction: column;
 }
 
+/* Responsive layout - when the screen is less than 1058px wide, make the two columns
+stack on top of each other instead of next to each other */
+@media (max-width: 1058px) {
+  .cont-row {
+         flex-direction: column;
+       }
+}
+
 li {
     list-style: none;
 }
@@ -130,6 +138,7 @@ p {
   text-align: center;
   margin-top: 1.5em;
   letter-spacing: .2rem;
+  word-spacing: .25em;
 }
 
 /* MAIN CATEGORY PAGE ========================================= */
@@ -145,8 +154,27 @@ p {
 }
 
 .d-block w-100 {
-  width: 100%;
+    width: 100%;
+}
 
+.cate-spaceing {
+    text-align: center;
+}
+
+.card-title {
+    font-family: 'Luckiest Guy', cursive;
+    letter-spacing: .2rem;
+}
+
+.btn-primary {
+    background-color: #A7FFEB;
+    border-color: black;
+    color: black;
+    font-family: 'Philosopher', sans-serif;
+}
+
+.btn-primary:hover {
+    background-color: #6c757d;
 }
 
 /* SHOW PAGE ========================================= */
@@ -170,7 +198,6 @@ p {
     padding-right: 3em;
     width: 50%;
     background-color: #c4f7eb;;
-    /*border-style: solid;*/
     font-family: 'Philosopher', sans-serif;
 }
 
@@ -206,7 +233,8 @@ p {
     margin-top: 1em;
     margin-bottom: 1em;
     background-color: transparent;
-    border: none;
+    border-width: thin;
+    border-color: black
     color: black;
 
 }
@@ -330,10 +358,12 @@ p {
     font-family: 'Philosopher', sans-serif;
     letter-spacing: .2rem;
     word-spacing: .25em;
+    color: white;
 }
 
 .btnContinue:hover {
     background-color: #a8abaa;
+    color: black;
 }
 
 .btnCheckout {
@@ -341,10 +371,12 @@ p {
     border: black;
     font-family: 'Philosopher', sans-serif;
     letter-spacing: .2rem;
+    color: white;
 }
 
 .btnCheckout:hover {
     background-color: #a8abaa;
+    color: black;
 }
 
 /* ABOUT ========================================= */
