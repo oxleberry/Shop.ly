@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Google Fonts -->
-        <!-- <link href="https://fonts.googleapis.com/css?family=|Lato|Raleway" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css?family=Acme|Arimo|Boogaloo|Gloria+Hallelujah|Josefin+Sans|Jura|Luckiest+Guy|Monoton|Muli|Nanum+Pen+Script|Philosopher|Poppins|Shadows+Into+Light|Shadows+Into+Light+Two|Ubuntu" rel="stylesheet">
         <!-- Font Awesome CDN -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
         <!-- Bootstrap CSS -->
@@ -26,44 +26,35 @@
     </head>
     <body>
         <header>
-            <!-- TEMPORARY NAV BAR -->
-            <!-- https://getbootstrap.com/docs/4.0/components/navbar/             -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <a class="navbar-brand" href="#">Navbar</a>
+            <!-- NAV BAR -->
+            <nav class="navbar navbar-expand-lg navbar-light nav-color">
+              <a class="navbar-brand site-title" href="#">Shop.ly</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto nav-margin-home">
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="testing.html">Home <span class="sr-only">(current)</span></a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                  <li class="nav-item nav-margin-about">
+                    <a class="nav-link" href="#about">About</a>
                   </li>
-                  <li class="nav-item dropdown">
+                  <li class="nav-item dropdown nav-margin-shirts">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown
+                      Shirts
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu" aria-labelledby="Shirts">
+                      <a class="dropdown-item" href="#carouselTaco">Taco</a>
+                      <a class="dropdown-item" href="#carouselDeveloper">Web Developer</a>
+                      <a class="dropdown-item" href="#carouselPolitical">Political</a>
                     </div>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                  </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <i class="fas fa-cart-plus fa-3x cart-icon"></i>
               </div>
             </nav>
-            <!-- END OF TEMPORARY NAV BAR -->
+            <!-- END OF NAV BAR -->
         <header>
 
         <main>
@@ -169,12 +160,15 @@
                         </div>
                 </form>
 
-
             </section>
-
         </main>
 
         <footer>
+            <div class="social-media">
+                <i class="fab fa-facebook-f fa-2x media-fa"></i>
+                <i class="fab fa-twitter fa-2x media-tw"></i>
+                <i class="fab fa-instagram fa-2x media-insta"></i>
+            </div>
         </footer>
     </body>
 </html>

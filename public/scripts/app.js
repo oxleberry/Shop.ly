@@ -54,12 +54,6 @@ function loadSuccess(json) {
         var detailUrl = `/api/shirts/${cateBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
-
-          beforeSend: function(){
-                 // Handle the beforeSend event
-          },
-
-
           method: 'GET',
           // url: '/api/shirts/:id',
           url: detailUrl,
@@ -68,14 +62,6 @@ function loadSuccess(json) {
         });
     });
 }
-
-// WHEN SEE DETAILS BUTTON IS CLICKED
-
-// loop through shirt.size
-// (change p tags to buttons)
-// if the size quantity is < 1
-    // toggle class active, which hides button tag
-
 
 // populates details section
 function detailsSuccess(shirt) {
@@ -92,18 +78,19 @@ function detailsSuccess(shirt) {
         <h6>${shirt.price}</h6>
         <div class="cont-row show-text">
             <h6>Size</h6>
-            <p>XS: ${shirt.size[0]}</p>
-            <p>S: ${shirt.size[1]}</p>
-            <p>M: ${shirt.size[2]}</p>
-            <p>L: ${shirt.size[3]}</p>
-            <p>XL: ${shirt.size[4]}</p>
-            <p>XXL: ${shirt.size[5]}</p>
+            <button class="size">XS: ${shirt.size[0]}</button>
+            <button class="size">S: ${shirt.size[1]}</button>
+            <button class="size">M: ${shirt.size[2]}</button>
+            <button class="size">L: ${shirt.size[3]}</button>
+            <button class="size">XL: ${shirt.size[4]}</button>
+            <button class="size">XXL: ${shirt.size[5]}</button>
         </div>
         <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
         <p>${shirt.description}</p>
     </div>
     `;
     $('#tee-show').append(detailsShirt);
+    inventoryCheck(shirt);
     $('.btn-detail').on('click', function() {
         console.log('CART BUTTON CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
@@ -117,10 +104,30 @@ function detailsSuccess(shirt) {
           success: cartSuccess,
           error: handleError
       });
-
-
     });
 }
+
+// When detail button is clicked
+// show only the sizes available if the inventory is above 1pc
+function inventoryCheck(shirt) {
+    var shirtSize = shirt.size;
+    console.log("INVENTORY CHECK");
+    console.log(shirtSize);
+    $('button.size').each( function(idx, el) {
+        console.log(shirtSize[idx]);
+        if (shirtSize[idx] < 1) {
+            $(this).addClass('outOfStock');
+            // console.log(button.size);
+        }
+    });
+}
+
+// when desired size is clicked,
+    // make that button active,
+    // all other buttons should deactivate.
+// when add to bag button is clicked,
+    // send size data to cart with the active class.
+
 
 // WHEN ADD TO BAG BUTTON IS CLICKED
 
@@ -142,6 +149,7 @@ function cartSuccess(shirt) {
     // console.log(currentTotal);
     populateCart(shirt);
 }
+
 
 // populate cart section with data of each shirt
 // when add to bag is clicked
