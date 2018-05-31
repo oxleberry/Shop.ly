@@ -113,18 +113,17 @@ app.get('/api/shirts/:id', (req, res) => {
 //     });
 // });
 
-// update
+// update size inventory
 app.put('/api/shirts/:id', (req, res) => {
-
-    // // get todo id from url params (`req.params`)
-    // let shirtId = req.params.id;
-    // // get update body from req.body
-    // let updateBody = req.body;
-    // // find and update the todos's attributes
-    // db.Shirt.findOneAndUpdate({ _id: shirtId }, updateBody, {new:true}, (err, updatedShirt) => {
-    //     if(err) { return console.log(err) }
-    //     res.json(updatedShirt);
-    // });
+    // get todo id from url params (`req.params`)
+    let invId = req.params.id;
+    // get update body from req.body
+    let updateBody = req.body;
+    // find and update the todos's attributes
+    db.Shirt.findOneAndUpdate({ _id: invId }, updateBody, {new:true}, (err, updatedShirt) => {
+        if(err) { return console.log(err) }
+        res.json(updatedShirt);
+    });
 });
 
 // delete

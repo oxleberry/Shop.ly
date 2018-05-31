@@ -229,6 +229,10 @@ p {
     margin-top: 1em;
 }
 
+#tee-show {
+    background-color: #f2f2f2;
+}
+
 /* CART ========================================= */
 
 .cart-main {
@@ -274,28 +278,6 @@ p {
 
 .quantity-flex {
     justify-content: space-between;
-}
-
-.btnContinue {
-    background-color: #CE93D8;
-    border-color: black;
-    color: black;
-    font-family: 'Philosopher', sans-serif;
-}
-
-.btnContinue:hover {
-    background-color: #00695C;
-}
-
-.btnCheckout {
-    background-color: #CE93D8;
-    border-color: black;
-    color: black;
-    font-family: 'Philosopher', sans-serif;
-}
-
-.btnCheckout:hover {
-    background-color: #00695C;
 }
 
 /* ABOUT ========================================= */

@@ -1,6 +1,8 @@
 
 let currentCart = [];
 let currentTotal = [];
+let selSize;
+let selSizeQty;
 
 const designList = [
     {
@@ -11,6 +13,7 @@ const designList = [
     }
 ];
 
+// add to current cart and current total
 
 $(function() {
     console.log('Sanity Check :)');
@@ -28,7 +31,7 @@ $(function() {
 
 
 
-// populates category page from database
+// populates category section from database
 function loadSuccess(json) {
     console.log("loaded success");
     console.log(json);
@@ -39,7 +42,7 @@ function loadSuccess(json) {
           <img class="card-img-top" src="images/${el.image}" alt="tee-design">
           <div class="card-body">
             <h5 class="card-title">${el.name}</h5>
-            <p class="card-text">${el.price}</p>
+            <p class="card-text">$ ${el.price}</p>
             <button data-id="${el._id}" class="btn btn-primary btn-category">See Detail</button>
           </div>
         </div>
@@ -47,19 +50,13 @@ function loadSuccess(json) {
         $('#tee-design').append(cateShirt);
     });
     // when each shirt button is clicked,
-    // grap the data-id associated with that shirt
+    // grab the data-id associated with that shirt
     $('.btn-category').on('click', $('#tee-design'), function() {
         var cateBtnAttr = $(this).attr('data-id');
         // console.log(cateBtnAttr);
         var detailUrl = `/api/shirts/${cateBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
-
-          beforeSend: function(){
-                 // Handle the beforeSend event
-          },
-
-
           method: 'GET',
           // url: '/api/shirts/:id',
           url: detailUrl,
@@ -68,14 +65,6 @@ function loadSuccess(json) {
         });
     });
 }
-
-// WHEN SEE DETAILS BUTTON IS CLICKED
-
-// loop through shirt.size
-// (change p tags to buttons)
-// if the size quantity is < 1
-    // toggle class active, which hides button tag
-
 
 // populates details section
 function detailsSuccess(shirt) {
@@ -89,25 +78,27 @@ function detailsSuccess(shirt) {
     </div>
     <div class="show-details">
         <h6>${shirt.name}</h6>
-        <h6>${shirt.price}</h6>
+        <h6>$ ${shirt.price}</h6>
         <div class="cont-row show-text">
             <h6>Size</h6>
-            <p>XS: ${shirt.size[0]}</p>
-            <p>S: ${shirt.size[1]}</p>
-            <p>M: ${shirt.size[2]}</p>
-            <p>L: ${shirt.size[3]}</p>
-            <p>XL: ${shirt.size[4]}</p>
-            <p>XXL: ${shirt.size[5]}</p>
+            <button data-idx="0" class="size">XS: ${shirt.size[0]}</button>
+            <button data-idx="1" class="size">S: ${shirt.size[1]}</button>
+            <button data-idx="2" class="size">M: ${shirt.size[2]}</button>
+            <button data-idx="3" class="size">L: ${shirt.size[3]}</button>
+            <button data-idx="4" class="size">XL: ${shirt.size[4]}</button>
+            <button data-idx="5" class="size">XXL: ${shirt.size[5]}</button>
         </div>
         <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
         <p>${shirt.description}</p>
     </div>
     `;
     $('#tee-show').append(detailsShirt);
+    inventoryCheck(shirt);
+    activateSize();
     $('.btn-detail').on('click', function() {
-        console.log('CART BUTTON CLICKED');
+        // console.log('ADD TO BAG CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
-        console.log(detailBtnAttr);
+        // console.log(detailBtnAttr);
         var cartUrl = `/api/shirts/${detailBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
@@ -116,18 +107,53 @@ function detailsSuccess(shirt) {
           url: cartUrl,
           success: cartSuccess,
           error: handleError
-      });
-
-
+        });
     });
 }
 
-// WHEN ADD TO BAG BUTTON IS CLICKED
+// When detail button is clicked
+// show only the sizes available if the inventory is above 1pc
+function inventoryCheck(shirt) {
+    var shirtSize = shirt.size;
+    // console.log("INVENTORY CHECK");
+    // console.log(shirtSize);
+    $('button.size').each( function(idx, el) {
+        // console.log(shirtSize[idx]);
+        if (shirtSize[idx] < 1) {
+            $(this).addClass('outOfStock');
+            // console.log(button.size);
+        }
+    });
+}
 
-// decrement the inventory from that items size
-// use that attr to
+// in detail section, add class to selected size
+function activateSize() {
+    $('button.size').on('click', function(){
+        // console.log("SELECTED SIZE");
+        $('.size').removeClass('selected');
+        $(this).toggleClass('selected');
+        var selectedSize = $(this).text();
+        // var selectedSize = $('.selected');
+        var selSplitter = selectedSize.indexOf(':')
+        // console.log(selectedSize);
+        // console.log(selSplitter);
+        selSize = selectedSize.slice(0, selSplitter);
+        selSizeQty = selectedSize.slice(selSplitter + 2);
+        // console.log(selSize);
+        // console.log(selSizeQty);
+    });
+}
 
-// add to current cart and current total
+// grab button with selected class
+function selectedSize() {
+    // console.log("SELECTED BUTTON IDX");
+    var selBtnId = $('button.selected').attr('data-idx');
+    // console.log(selBtnId);
+    // console.log("SELECTED BUTTON VAL");
+    // console.log(selSizeQty);
+    return selBtnId;
+}
+
 // when add to bag is clicked
 function cartSuccess(shirt) {
     // console.log('CART SUCCESS');
@@ -140,18 +166,50 @@ function cartSuccess(shirt) {
     currentTotal.push(shirtPrice);
     // console.log(currentCart);
     // console.log(currentTotal);
+    // var cartBtnAttr = $(this).attr('data-id');
+
+    // decrement the inventory from that items size
+    var updatedSizeArr = decrementQty(shirt);
+    var invUrl = `/api/shirts/${shirtId}`;
+    $.ajax({
+      method: 'PUT',
+      // url: '/api/shirts/:id',
+      url: invUrl,
+      // // use data to update the value in db
+      data: { size: updatedSizeArr },
+      success: invSuccess,
+      error: handleError
+    });
     populateCart(shirt);
 }
+
+// decrement the inventory from that items size
+function decrementQty(shirt) {
+    var sizeArray = shirt.size;
+    console.log('SIZE ARRAY');
+    console.log(sizeArray);
+    var currSizeIdx = selectedSize();
+    // console.log('CURRENT IDX');
+    // console.log(currSizeIdx);
+    selSizeQty = parseInt(selSizeQty);
+    selSizeQty--;
+    sizeArray[currSizeIdx] = selSizeQty;
+    console.log('UPDATED ARRAY');
+    console.log(sizeArray);
+    return sizeArray;
+}
+
 
 // populate cart section with data of each shirt
 // when add to bag is clicked
 function populateCart(shirt) {
-    console.log("POPULATING CART");
+    // console.log("POPULATING CART");
     var updateCart = `
     <button class="cart-delete">x</button>
     <img class="cart-img" src="images/${shirt.image}" alt="">
     <p>${shirt.name}</p>
-    <p>${shirt.price}</p>
+    <p>$ ${shirt.price}</p>
+    <p>Size: ${selSize}</p>
     <div class="form-group cont-row quantity-flex">
       <div>
           <label for="cart-quantity">Quantity</label>
@@ -167,9 +225,15 @@ function populateCart(shirt) {
     </div>
     <hr>
     `;
-
     $('#cart-item').append(updateCart);
 };
+
+function invSuccess(json) {
+    console.log("INVENTORY SUCCESS");
+    // console.log(json);
+    // console.log(json.size[selSizeQty]);
+}
+
 
 function handleError(e) {
     console.log('uh oh');
