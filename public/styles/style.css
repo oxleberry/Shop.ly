@@ -169,7 +169,7 @@ p {
     padding-left: 3em;
     padding-right: 3em;
     width: 50%;
-    background-color: #64FFDA;
+    background-color: #c4f7eb;;
     /*border-style: solid;*/
     font-family: 'Philosopher', sans-serif;
 }
@@ -190,8 +190,9 @@ p {
 }
 
 .showDetailsQuantity {
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin-right: .2em;
+    font-family: 'Philosopher', sans-serif;
 }
 
 .show-text p {
@@ -204,24 +205,25 @@ p {
     margin-left: 1em;
     margin-top: 1em;
     margin-bottom: 1em;
-    background-color: #64FFDA;
+    background-color: transparent;
     border: none;
     color: black;
 
 }
 
 .btnShirtSize:hover {
-    background-color: #00695C;
+    background-color: #6c757d;
 }
 
 .btnShowPage {
-    background-color: #CE93D8;
+    background-color: #e0e6e5;
     color: black;
     margin-bottom: 1em;
+    word-spacing: .25em;
 }
 
 .btnShowPage:hover {
-    background-color: #00695C;
+    background-color: #6c757d;
 }
 
 .showDetailsDescription {
@@ -270,14 +272,48 @@ p {
     border-top: solid 1px #ccc;
 }
 
+#shoppingCartTitle  {
+    font-family: 'Philosopher', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    background-color: #6c757d;
+    color: white;
+    letter-spacing: .25rem;
+}
+
 .cart-delete {
     float: right;
     border-radius: 4px;
-    background-color: red;
+    background-color: #ccc3c37a;
+    font-family: 'Philosopher', sans-serif;
+    text-transform: capitalize
 }
 
 .quantity-flex {
     justify-content: space-between;
+}
+
+.btnContinue {
+    background-color: #6c757d;
+    border: black;
+    font-family: 'Philosopher', sans-serif;
+    letter-spacing: .2rem;
+    word-spacing: .25em;
+}
+
+.btnContinue:hover {
+    background-color: #a8abaa;
+}
+
+.btnCheckout {
+    background-color: #6c757d;
+    border: black;
+    font-family: 'Philosopher', sans-serif;
+    letter-spacing: .2rem;
+}
+
+.btnCheckout:hover {
+    background-color: #a8abaa;
 }
 
 /* ABOUT ========================================= */
