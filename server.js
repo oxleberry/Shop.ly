@@ -38,10 +38,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // define a root route: localhost:3000/
 app.get('/', (req, res) => {
   // res.send('Hello World');
-//   res.sendFile('views/index.html' , { root : __dirname});
-// });
-    res.sendFile('views/category.html' , { root : __dirname});
+  res.sendFile('views/index.html' , { root : __dirname});
 });
+//     res.sendFile('views/category.html' , { root : __dirname});
+// });
 
 
 
