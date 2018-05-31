@@ -72,31 +72,68 @@ function detailsSuccess(shirt) {
     // console.log(shirt);
     $('#tee-show').empty();
     // populate shirt details section
+    // const detailsShirt = `
+    // <div class="show-image">
+    //   <img src="images/${shirt.image}" alt="">
+    // </div>
+    // <div class="show-details">
+    //     <h6>${shirt.name}</h6>
+    //     <h6>$ ${shirt.price}</h6>
+    //     <div class="cont-row show-text">
+    //         <h6>Size</h6>
+    //         <button data-idx="0" class="size">XS: ${shirt.size[0]}</button>
+    //         <button data-idx="1" class="size">S: ${shirt.size[1]}</button>
+    //         <button data-idx="2" class="size">M: ${shirt.size[2]}</button>
+    //         <button data-idx="3" class="size">L: ${shirt.size[3]}</button>
+    //         <button data-idx="4" class="size">XL: ${shirt.size[4]}</button>
+    //         <button data-idx="5" class="size">XXL: ${shirt.size[5]}</button>
+    //     </div>
+    //     <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
+    //     <p>${shirt.description}</p>
+    // </div>
+    // `;
+
     const detailsShirt = `
     <div class="show-image">
       <img src="images/${shirt.image}" alt="">
     </div>
     <div class="show-details">
-        <h6>${shirt.name}</h6>
-        <h6>$ ${shirt.price}</h6>
+        <h2 class="showDetailsName">${shirt.name}</h2>
+        <hr>
+        <h4 class="showDetailsPrice">$ ${shirt.price}</h4>
         <div class="cont-row show-text">
-            <h6>Size</h6>
-            <button data-idx="0" class="size">XS: ${shirt.size[0]}</button>
-            <button data-idx="1" class="size">S: ${shirt.size[1]}</button>
-            <button data-idx="2" class="size">M: ${shirt.size[2]}</button>
-            <button data-idx="3" class="size">L: ${shirt.size[3]}</button>
-            <button data-idx="4" class="size">XL: ${shirt.size[4]}</button>
-            <button data-idx="5" class="size">XXL: ${shirt.size[5]}</button>
+            <h3 class="showDetailsSize">Size</h3>
+            <button data-idx="0" type="button" class="btn btn-primary btn-sm btnShirtSize size">XS: ${shirt.size[0]}</button>
+            <button data-idx="1" type="button" class="btn btn-primary btn-sm btnShirtSize size">S: ${shirt.size[1]}</button>
+            <button data-idx="2" type="button" class="btn btn-primary btn-sm btnShirtSize size">M: ${shirt.size[2]}</button>
+            <button data-idx="3" type="button" class="btn btn-primary btn-sm btnShirtSize size">L: ${shirt.size[3]}</button>
+            <button data-idx="4" type="button" class="btn btn-primary btn-sm btnShirtSize size">XL: ${shirt.size[4]}</button>
+            <button data-idx="5" type="button" class="btn btn-primary btn-sm btnShirtSize size">XXL: ${shirt.size[5]}</button>
         </div>
-        <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
-        <p>${shirt.description}</p>
+        <div class="form-group cont-row">
+          <div class="showDetailsQuantity">
+              <label for="exampleFormControlSelect1">Quantity</label>
+          </div>
+          <div>
+              <select class="form-control" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+          </div>
+        </div>
+        <button data-id="${shirt._id}" type="button" class="btn btn-block btnShowPage btn-detail">add to bag</button>
+        <hr>
+        <h3 class="showDetailsDescription">${shirt.description}</h3>
     </div>
     `;
+
+
     $('#tee-show').append(detailsShirt);
     inventoryCheck(shirt);
     activateSize();
     $('.btn-detail').on('click', function() {
-        // console.log('ADD TO BAG CLICKED');
+        console.log('ADD TO BAG CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
         // console.log(detailBtnAttr);
         var cartUrl = `/api/shirts/${detailBtnAttr}`;
@@ -129,13 +166,13 @@ function inventoryCheck(shirt) {
 // in detail section, add class to selected size
 function activateSize() {
     $('button.size').on('click', function(){
-        // console.log("SELECTED SIZE");
+        console.log("SELECTED SIZE");
         $('.size').removeClass('selected');
         $(this).toggleClass('selected');
         var selectedSize = $(this).text();
         // var selectedSize = $('.selected');
         var selSplitter = selectedSize.indexOf(':')
-        // console.log(selectedSize);
+        console.log(selectedSize);
         // console.log(selSplitter);
         selSize = selectedSize.slice(0, selSplitter);
         selSizeQty = selectedSize.slice(selSplitter + 2);
@@ -160,7 +197,7 @@ function cartSuccess(shirt) {
     // console.log(shirt);
     var shirtId = shirt._id;
     var shirtPrice = shirt.price;
-    // console.log(shirtId);
+    console.log(shirtId);
     // console.log(shirtPrice);
     currentCart.push(shirtId);
     currentTotal.push(shirtPrice);
@@ -181,6 +218,7 @@ function cartSuccess(shirt) {
       error: handleError
     });
     populateCart(shirt);
+    calcTotal();
 }
 
 // decrement the inventory from that items size
@@ -205,15 +243,15 @@ function decrementQty(shirt) {
 function populateCart(shirt) {
     // console.log("POPULATING CART");
     var updateCart = `
-    <button class="cart-delete">x</button>
+    <button class="cart-delete">Remove</button>
     <img class="cart-img" src="images/${shirt.image}" alt="">
     <p>${shirt.name}</p>
-    <p>$ ${shirt.price}</p>
+    <p>Price: $ ${shirt.price}</p>
     <p>Size: ${selSize}</p>
-    <div class="form-group cont-row quantity-flex">
-      <div>
-          <label for="cart-quantity">Quantity</label>
-      </div>
+    <div class="form-group cont-row">
+        <div class="showDetailsQuantity">
+            <label for="exampleFormControlSelect1">Quantity</label>
+        </div>
       <div>
           <select class="form-control" id="cart-quantity">
               <option>1</option>
@@ -221,7 +259,6 @@ function populateCart(shirt) {
               <option>3</option>
           </select>
       </div>
-      <button>update</button>
     </div>
     <hr>
     `;
@@ -258,4 +295,13 @@ function renderNewDesign(design) {
     `;
 
     $('#testing').append(showDesign);
+}
+
+function calcTotal() {
+	var numTotal = currentTotal.reduce( function (acc, val) {
+		return acc + val;
+    });
+    // return currentTotal;
+
+    $('.total').text(`Total: $ ${numTotal}`);
 }

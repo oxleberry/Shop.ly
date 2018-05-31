@@ -1,5 +1,4 @@
 
-// shirt.js
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -14,9 +13,8 @@ var UserSchema = new Schema({
     // purchase_id: Number
  });
 
- // shirt.js
- var User = mongoose.model('User', UserSchema);
 
+ var User = mongoose.model('User', UserSchema);
 
 
  // Exporting the shirts
