@@ -224,6 +224,9 @@ p {
     opacity: 0;
 }
 
+.selected {
+    background-color: #63ffdb;
+}
 /* ABOUT ========================================= */
 
 #about {

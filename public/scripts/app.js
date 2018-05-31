@@ -1,6 +1,7 @@
 
 let currentCart = [];
 let currentTotal = [];
+let selSize;
 
 const designList = [
     {
@@ -39,7 +40,7 @@ function loadSuccess(json) {
           <img class="card-img-top" src="images/${el.image}" alt="tee-design">
           <div class="card-body">
             <h5 class="card-title">${el.name}</h5>
-            <p class="card-text">${el.price}</p>
+            <p class="card-text">$ ${el.price}</p>
             <button data-id="${el._id}" class="btn btn-primary btn-category">See Detail</button>
           </div>
         </div>
@@ -75,7 +76,7 @@ function detailsSuccess(shirt) {
     </div>
     <div class="show-details">
         <h6>${shirt.name}</h6>
-        <h6>${shirt.price}</h6>
+        <h6>$ ${shirt.price}</h6>
         <div class="cont-row show-text">
             <h6>Size</h6>
             <button class="size">XS: ${shirt.size[0]}</button>
@@ -91,6 +92,7 @@ function detailsSuccess(shirt) {
     `;
     $('#tee-show').append(detailsShirt);
     inventoryCheck(shirt);
+    selectedSize();
     $('.btn-detail').on('click', function() {
         console.log('CART BUTTON CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
@@ -111,10 +113,10 @@ function detailsSuccess(shirt) {
 // show only the sizes available if the inventory is above 1pc
 function inventoryCheck(shirt) {
     var shirtSize = shirt.size;
-    console.log("INVENTORY CHECK");
-    console.log(shirtSize);
+    // console.log("INVENTORY CHECK");
+    // console.log(shirtSize);
     $('button.size').each( function(idx, el) {
-        console.log(shirtSize[idx]);
+        // console.log(shirtSize[idx]);
         if (shirtSize[idx] < 1) {
             $(this).addClass('outOfStock');
             // console.log(button.size);
@@ -122,12 +124,21 @@ function inventoryCheck(shirt) {
     });
 }
 
-// when desired size is clicked,
-    // make that button active,
-    // all other buttons should deactivate.
-// when add to bag button is clicked,
-    // send size data to cart with the active class.
-
+// in detail section, add class to selected size
+function selectedSize() {
+    $('button.size').on('click', function(){
+        console.log("SELECTED SIZE");
+        $('.size').removeClass('selected');
+        $(this).toggleClass('selected');
+        var selectedSize = $(this).text();
+        // var selectedSize = $('.selected');
+        var selSplitter = selectedSize.indexOf(':')
+        console.log(selectedSize);
+        console.log(selSplitter);
+        selSize = selectedSize.slice(0, selSplitter);
+        console.log(selSize);
+    });
+}
 
 // WHEN ADD TO BAG BUTTON IS CLICKED
 
@@ -159,7 +170,8 @@ function populateCart(shirt) {
     <button class="cart-delete">x</button>
     <img class="cart-img" src="images/${shirt.image}" alt="">
     <p>${shirt.name}</p>
-    <p>${shirt.price}</p>
+    <p>$ ${shirt.price}</p>
+    <p>Size: ${selSize}</p>
     <div class="form-group cont-row quantity-flex">
       <div>
           <label for="cart-quantity">Quantity</label>
