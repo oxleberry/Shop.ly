@@ -4,20 +4,22 @@ let currentTotal = [];
 let selSize;
 let selSizeQty;
 
-const designList = [
-    {
-        custom_text: 'Zombies are coming',
-        design_title: 'Pancakes',
-        designer_name: 'Mochi',
-        image: 'precision.jpg'
-    }
-];
+// const designList = [
+//     {
+//         custom_text: 'Zombies are coming',
+//         design_title: 'Pancakes',
+//         designer_name: 'Mochi',
+//         image: 'precision.jpg'
+//     }
+// ];
 
 // add to current cart and current total
 
 $(function() {
     console.log('Sanity Check :)');
 
+    $("#catalog-section").hide();
+    $('.outer-thanks-cont').hide();
     // category page
     $.ajax({
       method: 'GET',
@@ -32,6 +34,16 @@ $(function() {
       error: handleError
     });
 
+    $(".carousel-inner").on("click", function(){
+        $("#home-section").hide();
+        $("#catalog-section").show();
+    });
+
+    // $("a.home-link").on("click", function(e){
+    //     e.preventDefault(;)
+    //     $("#home-section").toggle();
+    //     $("#catalog-section").toggle();
+    // });
 
 }); // end of document.ready
 
@@ -330,6 +342,9 @@ function saveUser() {
 //save User contact info in db
 function saveUserSuccess(json){
     console.log(json);
+    $('.btnCheckout').on('click', function(){
+        $('.outer-thanks-cont').show();
+    });
 }
 
 function calcTotal() {
