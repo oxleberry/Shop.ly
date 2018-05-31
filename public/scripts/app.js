@@ -2,6 +2,7 @@
 let currentCart = [];
 let currentTotal = [];
 let selSize;
+let selSizeQty;
 
 const designList = [
     {
@@ -12,6 +13,7 @@ const designList = [
     }
 ];
 
+// add to current cart and current total
 
 $(function() {
     console.log('Sanity Check :)');
@@ -29,7 +31,7 @@ $(function() {
 
 
 
-// populates category page from database
+// populates category section from database
 function loadSuccess(json) {
     console.log("loaded success");
     console.log(json);
@@ -48,7 +50,7 @@ function loadSuccess(json) {
         $('#tee-design').append(cateShirt);
     });
     // when each shirt button is clicked,
-    // grap the data-id associated with that shirt
+    // grab the data-id associated with that shirt
     $('.btn-category').on('click', $('#tee-design'), function() {
         var cateBtnAttr = $(this).attr('data-id');
         // console.log(cateBtnAttr);
@@ -79,12 +81,12 @@ function detailsSuccess(shirt) {
         <h6>$ ${shirt.price}</h6>
         <div class="cont-row show-text">
             <h6>Size</h6>
-            <button class="size">XS: ${shirt.size[0]}</button>
-            <button class="size">S: ${shirt.size[1]}</button>
-            <button class="size">M: ${shirt.size[2]}</button>
-            <button class="size">L: ${shirt.size[3]}</button>
-            <button class="size">XL: ${shirt.size[4]}</button>
-            <button class="size">XXL: ${shirt.size[5]}</button>
+            <button data-idx="0" class="size">XS: ${shirt.size[0]}</button>
+            <button data-idx="1" class="size">S: ${shirt.size[1]}</button>
+            <button data-idx="2" class="size">M: ${shirt.size[2]}</button>
+            <button data-idx="3" class="size">L: ${shirt.size[3]}</button>
+            <button data-idx="4" class="size">XL: ${shirt.size[4]}</button>
+            <button data-idx="5" class="size">XXL: ${shirt.size[5]}</button>
         </div>
         <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
         <p>${shirt.description}</p>
@@ -92,11 +94,11 @@ function detailsSuccess(shirt) {
     `;
     $('#tee-show').append(detailsShirt);
     inventoryCheck(shirt);
-    selectedSize();
+    activateSize();
     $('.btn-detail').on('click', function() {
-        console.log('CART BUTTON CLICKED');
+        // console.log('ADD TO BAG CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
-        console.log(detailBtnAttr);
+        // console.log(detailBtnAttr);
         var cartUrl = `/api/shirts/${detailBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
@@ -105,7 +107,7 @@ function detailsSuccess(shirt) {
           url: cartUrl,
           success: cartSuccess,
           error: handleError
-      });
+        });
     });
 }
 
@@ -125,27 +127,33 @@ function inventoryCheck(shirt) {
 }
 
 // in detail section, add class to selected size
-function selectedSize() {
+function activateSize() {
     $('button.size').on('click', function(){
-        console.log("SELECTED SIZE");
+        // console.log("SELECTED SIZE");
         $('.size').removeClass('selected');
         $(this).toggleClass('selected');
         var selectedSize = $(this).text();
         // var selectedSize = $('.selected');
         var selSplitter = selectedSize.indexOf(':')
-        console.log(selectedSize);
-        console.log(selSplitter);
+        // console.log(selectedSize);
+        // console.log(selSplitter);
         selSize = selectedSize.slice(0, selSplitter);
-        console.log(selSize);
+        selSizeQty = selectedSize.slice(selSplitter + 2);
+        // console.log(selSize);
+        // console.log(selSizeQty);
     });
 }
 
-// WHEN ADD TO BAG BUTTON IS CLICKED
+// grab button with selected class
+function selectedSize() {
+    // console.log("SELECTED BUTTON IDX");
+    var selBtnId = $('button.selected').attr('data-idx');
+    // console.log(selBtnId);
+    // console.log("SELECTED BUTTON VAL");
+    // console.log(selSizeQty);
+    return selBtnId;
+}
 
-// decrement the inventory from that items size
-// use that attr to
-
-// add to current cart and current total
 // when add to bag is clicked
 function cartSuccess(shirt) {
     // console.log('CART SUCCESS');
@@ -158,14 +166,44 @@ function cartSuccess(shirt) {
     currentTotal.push(shirtPrice);
     // console.log(currentCart);
     // console.log(currentTotal);
+    // var cartBtnAttr = $(this).attr('data-id');
+
+    // decrement the inventory from that items size
+    var updatedSizeArr = decrementQty(shirt);
+    var invUrl = `/api/shirts/${shirtId}`;
+    $.ajax({
+      method: 'PUT',
+      // url: '/api/shirts/:id',
+      url: invUrl,
+      // // use data to update the value in db
+      data: { size: updatedSizeArr },
+      success: invSuccess,
+      error: handleError
+    });
     populateCart(shirt);
+}
+
+// decrement the inventory from that items size
+function decrementQty(shirt) {
+    var sizeArray = shirt.size;
+    console.log('SIZE ARRAY');
+    console.log(sizeArray);
+    var currSizeIdx = selectedSize();
+    // console.log('CURRENT IDX');
+    // console.log(currSizeIdx);
+    selSizeQty = parseInt(selSizeQty);
+    selSizeQty--;
+    sizeArray[currSizeIdx] = selSizeQty;
+    console.log('UPDATED ARRAY');
+    console.log(sizeArray);
+    return sizeArray;
 }
 
 
 // populate cart section with data of each shirt
 // when add to bag is clicked
 function populateCart(shirt) {
-    console.log("POPULATING CART");
+    // console.log("POPULATING CART");
     var updateCart = `
     <button class="cart-delete">x</button>
     <img class="cart-img" src="images/${shirt.image}" alt="">
@@ -187,9 +225,15 @@ function populateCart(shirt) {
     </div>
     <hr>
     `;
-
     $('#cart-item').append(updateCart);
 };
+
+function invSuccess(json) {
+    console.log("INVENTORY SUCCESS");
+    // console.log(json);
+    // console.log(json.size[selSizeQty]);
+}
+
 
 function handleError(e) {
     console.log('uh oh');
