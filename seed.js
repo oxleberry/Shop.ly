@@ -26,7 +26,7 @@ const shirtList = [{
     size: [0, 1, 3, 4, 2, 4],
     description: 'T-shirt are 100% organic cotton. Ethically sourced.'
 }, {
-    name: 'bad',
+    name: 'web developer',
     price: 18.99,
     image: 'bad.jpg',
     size: [1, 4, 3, 2, 3, 0],

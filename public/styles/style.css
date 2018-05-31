@@ -231,8 +231,39 @@ p {
     margin-top: 1em;
 }
 
+.btnContinue {
+    background-color: #CE93D8;
+    border-color: black;
+    color: black;
+    font-family: 'Philosopher', sans-serif;
+}
+
+.btnContinue:hover {
+    background-color: #00695C;
+}
+
+.btnCheckout {
+    background-color: #CE93D8;
+    border-color: black;
+    color: black;
+    font-family: 'Philosopher', sans-serif;
+}
+
+.btnCheckout:hover {
+    background-color: #00695C;
+}
+
 #tee-show {
     background-color: #f2f2f2;
+}
+
+.outOfStock {
+    /* display: none; */
+    opacity: 0;
+}
+
+.selected {
+    background-color: #63ffdb;
 }
 
 /* CART ========================================= */
