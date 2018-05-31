@@ -58,9 +58,23 @@ app.get('/api/shirts', (req, res) => {
     res.json(shirts);
   });
 });
+// GET ALL USERS
+app.get('/api/users', (req, res) => {
+  // send all shirts as JSON response
+  db.User.find( (err, users) => {
+    if (err) {
+      console.log("index error: " + err);
+      res.sendStatus(500);
+    }
+    // console.log('Get all ' + shirts);
+    res.json(users);
+  });
+});
+
+
 
 // CREATE
-app.post('/api/shirts', (req, res) => {
+app.post('/api/users', (req, res) => {
       // let newDesign = req.body;
       // newDesign.create( newDesign, (err, newDesignSuccess) => {
           // if (err) {
@@ -69,19 +83,22 @@ app.post('/api/shirts', (req, res) => {
           // }
       //     res.json(newDesignSuccess);
       // });
-      let createDesign = new db.Design ({
-          custom_text: req.body.custom_text,
-          design_title: req.body.design_title,
-          designer_name: req.body.designer_name
-      });
+      // let createUser = new db.User ({
+      //     first_name: req.body.first_name,
+      //     last_name: req.body.last_name,
+      //     phone: req.body.phone,
+      //     e_mail: req.body.e_mail,
+      //     address: req.body.address
+      // });
+      let createUser = new db.User (req.body);
       // create new book in db
-      createDesign.save( {}, (err, newDesignSuccess) => {
+      createUser.save( {}, (err, newUserSuccess) => {
           if (err) {
             console.log("create error: " + err);
             res.sendStatus(500);
           }
           // console.log("SERVER CREATE" + newDesignSuccess);
-          res.json(newDesignSuccess);
+          res.json(newUserSuccess);
       });
 });
 

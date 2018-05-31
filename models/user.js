@@ -9,7 +9,7 @@ var UserSchema = new Schema({
     e_mail: String,
     address: String,
     // cart will hold any selected _id of add to bag
-    cart: []
+    cart: [Number]
     // purchase_id: Number
  });
 
