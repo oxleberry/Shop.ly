@@ -22,82 +22,50 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //  ROUTES --------------------------
 
-// create a new route for GET /api with callback controllers.api.index
-// app.get('/api', controllers.api.index);
-
-//
-// const designList = [
-//     {
-//         custom_text: 'Zombies',
-//         design_title: 'Pancakes',
-//         designer_name: 'Mochi',
-//         image: 'images/precision.jpg'
-//     }
-// ];
-
 // define a root route: localhost:3000/
 app.get('/', (req, res) => {
-  // res.send('Hello World');
   res.sendFile('views/index.html' , { root : __dirname});
 });
-//     res.sendFile('views/category.html' , { root : __dirname});
-// });
-
 
 
 // DATABASE
 // GET ALL SHIRTS
 app.get('/api/shirts', (req, res) => {
-  // send all shirts as JSON response
   db.Shirt.find( (err, shirts) => {
     if (err) {
       console.log("index error: " + err);
       res.sendStatus(500);
     }
-    // console.log('Get all ' + shirts);
     res.json(shirts);
   });
 });
+
 // GET ALL USERS
 app.get('/api/users', (req, res) => {
-  // send all shirts as JSON response
   db.User.find( (err, users) => {
     if (err) {
       console.log("index error: " + err);
       res.sendStatus(500);
     }
-    // console.log('Get all ' + shirts);
     res.json(users);
   });
 });
 
-
-
 // CREATE
 app.post('/api/users', (req, res) => {
-      // let newDesign = req.body;
-      // newDesign.create( newDesign, (err, newDesignSuccess) => {
-          // if (err) {
-          //   console.log("create error: " + err);
-          //   res.sendStatus(500);
-          // }
-      //     res.json(newDesignSuccess);
-      // });
       let createUser = new db.User ({
           first_name: req.body.first_name,
           last_name: req.body.last_name,
           phone: req.body.phone,
           e_mail: req.body.e_mail,
-          address: req.body.address
+          address: req.body.address,
+          cart: req.body.cart
       });
-      // let createUser = new db.User (req.body);
-      // create new book in db
       createUser.save( {}, (err, newUserSuccess) => {
           if (err) {
             console.log("create error: " + err);
             res.sendStatus(500);
           }
-          // console.log("SERVER CREATE" + newDesignSuccess);
           res.json(newUserSuccess);
       });
 });
@@ -106,37 +74,16 @@ app.post('/api/users', (req, res) => {
 app.get('/api/shirts/:id', (req, res) => {
     // find shirt by button data-attr:
     let shirtId = req.params.id;
-    console.log("FINDING SHIRT");
-    console.log(shirtId);
-    // find shirt in db by id
     db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
         if(err) { return console.log(err) }
-        console.log("found one");
         res.json(foundShirt);
     });
 });
 
-// get one design for cart section
-// app.get('/api/shirts/:id', (req, res) => {
-//     // find shirt by button data-attr:
-//     let shirtId = req.params.id;
-//     console.log("FINDING SHIRT");
-//     console.log(shirtId);
-//     // find shirt in db by id
-//     db.Shirt.findOne({ _id: shirtId }, (err, foundShirt) => {
-//         if(err) { return console.log(err) }
-//         console.log("found one");
-//         res.json(foundShirt);
-//     });
-// });
-
 // update size inventory
 app.put('/api/shirts/:id', (req, res) => {
-    // get todo id from url params (`req.params`)
     let invId = req.params.id;
-    // get update body from req.body
     let updateBody = req.body;
-    // find and update the todos's attributes
     db.Shirt.findOneAndUpdate({ _id: invId }, updateBody, {new:true}, (err, updatedShirt) => {
         if(err) { return console.log(err) }
         res.json(updatedShirt);
@@ -144,12 +91,14 @@ app.put('/api/shirts/:id', (req, res) => {
 });
 
 // delete
-app.delete('/api/shirts/:id', (req, res) => {
-});
+// didn't get to this
+// app.delete('/api/shirts/:id', (req, res) => {
+// });
 
 // searches
-app.get('/api/shirts/?q=title', (req, res) => {
-});
+// didn't get to this
+// app.get('/api/shirts/?q=title', (req, res) => {
+// });
 
 //  SERVER --------------------------
 

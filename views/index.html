@@ -37,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto nav-margin-home">
                     <li class="nav-item active">
-                        <a class="nav-link home-link">Home <span class="sr-only">(current)</span></a>
+                        <a href="#" class="nav-link home-link">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item nav-margin-about">
                         <a class="nav-link" href="#about">About</a>
@@ -61,10 +61,9 @@
 
         <main>
             <!-- THREE CAROUSELS -->
-            <!-- https://getbootstrap.com/docs/4.0/components/carousel/  -->
-
             <section id="home-section">
 
+                <!-- TACO TEES -->
                 <section class="outer-cloth-cont">
                     <div class="cloth-cont cont-row">
                         <div class="cloth-caro">
@@ -107,9 +106,9 @@
                         </div>
                     </div>
 
+                    <!-- DEVELOPERS TEES -->
                     <div class="cloth-cont cont-row-reverse">
                         <div class="cloth-caro">
-                            <!-- Carousel Here -->
                             <div id="carouselDeveloper" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselDeveloper" data-slide-to="0" class="active"></li>
@@ -146,9 +145,9 @@
                         </div>
                     </div>
 
+                    <!-- POLITICAL TEES -->
                     <div class="cloth-cont cont-row">
                         <div class="cloth-caro">
-                            <!-- Carousel Here -->
                             <div id="carouselPolitical" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselPolitical" data-slide-to="0" class="active"></li>
@@ -188,6 +187,7 @@
                     </div>
                 </section>
 
+                <!-- ABOUT SECTION -->
                 <section id="about">
                     <h2 id="aboutFont">About</h2>
                     <p>Two Bay Area designers created Shop.ly from a love of sarcasm. They decided to put their
@@ -196,9 +196,10 @@
                         signature shirts as they relax sipping java on the corner of Telegraph & Durant in Berkeley.
                     </p>
                 </section>
-
             </section>
+            <!-- END OF HOME SECTION -->
 
+            <!-- BEGIN SHIRT CATALOG SECTION -->
             <section id="catalog-section">
                 <section id="tee-design" class="outer-cate-cont cont-row">
                 </section>
@@ -212,27 +213,21 @@
 
                             <div class="form-space-left">
                                 <div class="form-group">
-                                    <input id="form-name" class="form-control" type="text" name="first_name" placeholder="First Name">
-                                    <input class="form-control" type="text" name="lastt_name" placeholder="Last Name">
+                                    <input id="first-name" class="form-control" type="text" name="first_name" placeholder="First Name">
+                                    <input id="last-name"class="form-control" type="text" name="last_name" placeholder="Last Name">
                                     <input class="form-control" type="text" placeholder="Phone Number">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
                                     <input type="address" class="form-control" placeholder="Address">
                                 </div>
                                 <button class="btn btn-primary btn-block btnContinue">Continue Shopping</button>
                                 <button type="submit" value="Submit" class="btn btn-primary btn-block btnCheckout">Checkout</button>
-
-                                <div class="outer-thanks-cont">
-                                    <h1>Thanks!</h1>
-                                </div>
-
                             </div>
 
                             <div class="form-space-right">
                                 <h4> Shopping Cart </h4>
                                 <div id="cart-item" class="cart-item">
-
-
                                 </div>
+                                <div class="outer-thanks-cont"></div>
                                 <p class="total">Total</p>
                             </div>
 
@@ -240,15 +235,15 @@
                     </form>
                </section>
            </section>
-
+           <!-- END OF SHIRT CATALOG SECTION -->
     </main>
 
-<footer>
-    <div class="social-media">
-        <i class="fab fa-facebook-f fa-2x media-fa"></i>
-        <i class="fab fa-twitter fa-2x media-tw"></i>
-        <i class="fab fa-instagram fa-2x media-insta"></i>
-    </div>
-</footer>
+    <footer>
+        <div class="social-media">
+            <i class="fab fa-facebook-f fa-2x media-fa"></i>
+            <i class="fab fa-twitter fa-2x media-tw"></i>
+            <i class="fab fa-instagram fa-2x media-insta"></i>
+        </div>
+    </footer>
 </body>
 </html>

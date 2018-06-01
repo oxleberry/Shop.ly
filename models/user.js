@@ -1,18 +1,19 @@
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
-    firstName: String,
-    lastName: String,
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema({
+    first_name: String,
+    last_name: String,
     phone: String,
     e_mail: String,
     address: String,
-    cart: [Number]
+    cart: []
  });
 
 
- var User = mongoose.model('User', UserSchema);
+ const User = mongoose.model('User', UserSchema);
 
 
  // Exporting the shirts

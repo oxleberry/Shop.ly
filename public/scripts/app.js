@@ -1,13 +1,11 @@
 
+// variables to hold temp shopping cart status
 let currentCart = [];
-// let currentInventory = [];
 let currentTotal = [];
 let selSize;
 let selSizeQty;
 
 $(function() {
-    console.log('Sanity Check :)');
-
     $("#catalog-section").hide();
     $('.outer-thanks-cont').hide();
     // get all the shirt designs
@@ -30,10 +28,10 @@ $(function() {
         $("#home-section").hide();
         $("#catalog-section").show();
     });
-
     // link back from shopping section to home section
-    // $("a.home-link").on("click", function(e){
-    //     e.preventDefault(;)
+    // not yet working
+    // $("a home-link").on("click", function(e){
+    //     e.preventDefault();
     //     $("#home-section").toggle();
     //     $("#catalog-section").toggle();
     // });
@@ -43,8 +41,6 @@ $(function() {
 
 // populates category section from database
 function loadSuccess(json) {
-    console.log("loaded success");
-    console.log(json);
     json.forEach((el, idx) => {
         const cateShirt = `
         <div class="card card-size">
@@ -62,12 +58,10 @@ function loadSuccess(json) {
     // grab the data-id associated with that shirt
     $('.btn-category').on('click', $('#tee-design'), function() {
         var cateBtnAttr = $(this).attr('data-id');
-        // console.log(cateBtnAttr);
         var detailUrl = `/api/shirts/${cateBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
           method: 'GET',
-          // url: '/api/shirts/:id',
           url: detailUrl,
           success: detailsSuccess,
           error: handleError
@@ -77,10 +71,7 @@ function loadSuccess(json) {
 
 // populates details section
 function detailsSuccess(shirt) {
-    // console.log("details success");
-    // console.log(shirt);
     $('#tee-show').empty();
-
     const detailsShirt = `
     <div class="show-image">
       <img src="images/${shirt.image}" alt="">
@@ -91,12 +82,12 @@ function detailsSuccess(shirt) {
         <h4 class="showDetailsPrice">Price: $ ${shirt.price}</h4>
         <div class="cont-row show-text cont-wrap">
             <h3 class="showDetailsSize">Size</h3>
-            <button data-idx="0" type="button" class="btn btn-primary btn-md btnShirtSize size">XS: ${shirt.size[0]}</button>
-            <button data-idx="1" type="button" class="btn btn-primary btn-md btnShirtSize size">S: ${shirt.size[1]}</button>
-            <button data-idx="2" type="button" class="btn btn-primary btn-md btnShirtSize size">M: ${shirt.size[2]}</button>
-            <button data-idx="3" type="button" class="btn btn-primary btn-md btnShirtSize size">L: ${shirt.size[3]}</button>
-            <button data-idx="4" type="button" class="btn btn-primary btn-md btnShirtSize size">XL: ${shirt.size[4]}</button>
-            <button data-idx="5" type="button" class="btn btn-primary btn-md btnShirtSize size">XXL: ${shirt.size[5]}</button>
+            <button data-idx="0" type="button" class="btn btn-md btnShirtSize size">XS: ${shirt.size[0]}</button>
+            <button data-idx="1" type="button" class="btn btn-md btnShirtSize size">S: ${shirt.size[1]}</button>
+            <button data-idx="2" type="button" class="btn btn-md btnShirtSize size">M: ${shirt.size[2]}</button>
+            <button data-idx="3" type="button" class="btn btn-md btnShirtSize size">L: ${shirt.size[3]}</button>
+            <button data-idx="4" type="button" class="btn btn-md btnShirtSize size">XL: ${shirt.size[4]}</button>
+            <button data-idx="5" type="button" class="btn btn-md btnShirtSize size">XXL: ${shirt.size[5]}</button>
         </div>
         <button data-id="${shirt._id}" type="button" class="btn btn-block btnShowPage btn-detail">add to bag</button>
         <hr>
@@ -109,9 +100,7 @@ function detailsSuccess(shirt) {
     activateSize();
     // when add to bag button is clicked
     $('.btn-detail').on('click', function() {
-        console.log('ADD TO BAG CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
-        // console.log(detailBtnAttr);
         var cartUrl = `/api/shirts/${detailBtnAttr}`;
         // append that shirts data SHIRT-DETAIL info
         $.ajax({
@@ -129,56 +118,41 @@ function detailsSuccess(shirt) {
     // deactivate button if it has outOfStock class
 function inventoryCheck(shirt) {
     var shirtSize = shirt.size;
-    // console.log("INVENTORY CHECK");
-    // console.log(shirtSize);
     $('button.size').each( function(idx, el) {
-        // console.log(shirtSize[idx]);
         if (shirtSize[idx] < 1) {
-            $(this).addClass('outOfStock');
+            $(this).addClass('out-of-stock');
+            $(this).attr("disabled", "disabled");
         }
     });
 }
 
-// in detail section, add class to selected size
+// in detail section, add selected class
+// to the button that has been clicked on
 function activateSize() {
     $('button.size').on('click', function(){
-        console.log("SELECTED SIZE");
         $('.size').removeClass('selected');
         $(this).toggleClass('selected');
         var selectedSize = $(this).text();
-        // var selectedSize = $('.selected');
         var selSplitter = selectedSize.indexOf(':')
-        console.log(selectedSize);
-        // console.log(selSplitter);
         selSize = selectedSize.slice(0, selSplitter);
         selSizeQty = selectedSize.slice(selSplitter + 2);
-        // console.log(selSize);
-        // console.log(selSizeQty);
     });
 }
 
 // when add to bag is clicked
 function cartSuccess(shirt) {
-    // console.log('CART SUCCESS');
-    // console.log(shirt);
     var shirtId = shirt._id;
     var shirtPrice = shirt.price;
-    console.log(shirtId);
-    // console.log(shirtPrice);
     currentCart.push(shirtId);
     currentTotal.push(shirtPrice);
-    // console.log(currentCart);
-    // console.log(currentTotal);
-    // var cartBtnAttr = $(this).attr('data-id');
 
     // decrement the inventory from that items size
     var updatedSizeArr = decrementQty(shirt);
     var invUrl = `/api/shirts/${shirtId}`;
     $.ajax({
       method: 'PUT',
-      // url: '/api/shirts/:id',
       url: invUrl,
-      // // use data to update the value in db
+      // use data to update the value in db
       data: { size: updatedSizeArr },
       success: invSuccess,
       error: handleError
@@ -187,41 +161,37 @@ function cartSuccess(shirt) {
     calcTotal();
 }
 
+function invSuccess() {
+    // console.log("INVENTORY SUCCESS");
+}
+
+
 // grab the data-idx of the selected size button
 function selectedSize() {
-    // console.log("SELECTED BUTTON IDX");
     var selBtnId = $('button.selected').attr('data-idx');
-    // console.log(selBtnId);
-    // console.log("SELECTED BUTTON VAL");
-    // console.log(selSizeQty);
     return selBtnId;
 }
 
 // decrement the inventory from that items size
 function decrementQty(shirt) {
     var sizeArray = shirt.size;
-    console.log('SIZE ARRAY');
-    console.log(sizeArray);
+    // console.log('SIZE ARRAY');
+    // console.log(sizeArray);
     var currSizeIdx = selectedSize();
-    // console.log('CURRENT IDX');
-    // console.log(currSizeIdx);
     selSizeQty = parseInt(selSizeQty);
     selSizeQty--;
     sizeArray[currSizeIdx] = selSizeQty;
-    console.log('UPDATED ARRAY');
-    console.log(sizeArray);
+    // console.log('UPDATED ARRAY');
+    // console.log(sizeArray);
     return sizeArray;
 }
-
 
 // populate cart section with data of each shirt
 // when add to bag is clicked
 function populateCart(shirt) {
-    // console.log("POPULATING CART");
-
     var popCart = `
-    <div data-id="${shirt._id}">
-        <button data-id="${shirt._id}" class="cart-delete">Remove</button>
+    <div class="temp-item-cart" data-id="${shirt._id}">
+        <button data-id="${shirt._id}" data-size="${selSize}" class="cart-delete">Remove</button>
         <img class="cart-img" src="images/${shirt.image}" alt="">
         <p>${shirt.name}</p>
         <p>Price: $ ${shirt.price}</p>
@@ -231,83 +201,101 @@ function populateCart(shirt) {
     `;
     $('#cart-item').append(popCart);
 
-    // SHOPPING CART WHEN REMOVE ITEM IS CLICKED
+    // in shopping cart, when the Remove button is clicked
     // delete this item from array
     $('.cart-delete').on('click', function(){
         var detailBtnAttr = $(this).attr('data-id');
-        console.log(currentCart);
+        var sizeBtnAttr = $(this).attr('data-size');
+        // console.log(sizeBtnAttr);
+        // console.log(currentCart);
         $(this).parent().remove();
-            console.log(currentCart);
+        // get the total amount from temp cart
         currentCart.forEach( function (el, idx) {
             if (el === detailBtnAttr) {
                 currentCart.splice(idx, 1);
                 currentTotal.splice(idx, 1);
             }
-            console.log(el);
-            console.log(idx);
-            console.log(currentCart);
             if (currentTotal.length === 0) {
                 $('.total').text(`Total: $ 0`);
             } else {
                 calcTotal();
             }
+
+            // increment the inventory from that items size
+            // if they remove from cart
+            var shirtId = shirt._id;
+            var restockSizeArr = restockQty(shirt, sizeBtnAttr);
+            var invUrl = `/api/shirts/${shirtId}`;
+            $.ajax({
+              method: 'PUT',
+              url: invUrl,
+              // use data to update the value in db
+              data: { size: restockSizeArr },
+              success: invSuccess,
+              error: handleError
+            });
         });
     });
 };
 
-function invSuccess(json) {
-    console.log("INVENTORY SUCCESS");
-    // console.log(json);
-    // console.log(json.size[selSizeQty]);
+// restock the inventory if they remove from cart
+// still buggy
+function restockQty(shirt) {
+    // var shirtId = shirt._id;
+    var sizeArray = shirt.size;
+    // console.log('SIZE ARRAY');
+    // console.log(sizeArray);
+    var currSizeIdx = selectedSize();
+    selSizeQty = parseInt(selSizeQty);
+    selSizeQty++;
+    sizeArray[currSizeIdx] = selSizeQty;
+    // console.log('RESTOCKED ARRAY');
+    // console.log(sizeArray);
+    // console.log(currentCart);
+    // console.log(currentTotal);
+    return sizeArray;
 }
+
 
 // WHEN CHECKOUT BUTTON IS CLICKED
 function userSuccess(json) {
-    console.log("USER DATA");
-    // console.log(json.firstName);
-    var user = json;
-    var $userName = $("#form-name").val();
-    console.log($userName);
     $('#cart-form').on('submit', function(e) {
         e.preventDefault();
+        var $firstName = $("#first-name").val();
+        var $lastName = $("#last-name").val(); $("#last-name").val();
+        $.ajax({
+          method: 'POST',
+          url: '/api/users',
+          // not sure why serialize did not work.
+          // data: $(this).serialize(),
+          // use data to update the value in db
+          data: {
+              first_name: $firstName,
+              last_name: $lastName,
+              // testing
+              cart: [1,2,3,4]
+          },
+          success: saveUserSuccess,
+          error: handleError
+        });
+
+        // add thanks message
+        $('.outer-thanks-cont').html(`<h1>Thanks! ${$firstName}</h1><p>Your order has been received.</p>`);
+        $('.temp-item-cart').remove();
+        $('.total').toggle();
         $('.outer-thanks-cont').show();
-        // $("input").val();
-        var $userName = $("#form-name").val();
-        $('.outer-thanks-cont').html(`<h1>Thanks! ${$userName}</h1>`);
-        saveUser(user);
     });
 }
 
-// when checkout button is clicked
-// save user account info
-
-// Create Posts
-function saveUser(json) {
-    console.log("CREATING USER");
-    $.ajax({
-      method: 'POST',
-      url: '/api/users',
-      data: $(this).serialize(),
-      success: saveUserSuccess,
-      error: handleError
-    });
+function saveUserSuccess(){
+    // console.log("SAVE USER SUCCESS");
 }
 
-//save User contact info in db
-function saveUserSuccess(json){
-    console.log("SAVE USER SUCCESS");
-    console.log(json);
-    // $('.btnCheckout').on('click', function(){
-    //     $('.outer-thanks-cont').show();
-    // });
-}
-
+// calculate shopping cart total
 function calcTotal() {
 	var numTotal = currentTotal.reduce( function (acc, val) {
 		return acc + val;
     });
-    // return currentTotal;
-
     $('.total').text(`Total: $ ${numTotal}`);
 }
 

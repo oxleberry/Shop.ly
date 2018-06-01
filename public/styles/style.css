@@ -14,7 +14,6 @@
 body {
     margin: 0;
     padding: 0;
-    /* font-family: 'Raleway', sans-serif; */
 }
 
 .cont-row {
@@ -144,7 +143,6 @@ p {
 }
 
 .cate-spaceing {
-    /* justify-content: space-between; */
     padding: 1em;
     margin: 1em;
 }
@@ -181,7 +179,6 @@ p {
 
 .outer-show-cont {
     margin: 5em;
-    /* height: 70vh; */
 }
 
 .show-image {
@@ -236,7 +233,6 @@ p {
     border-width: thin;
     border-color: black
     color: black;
-
 }
 
 .btnShirtSize:hover {
@@ -275,20 +271,20 @@ p {
     border-color: black;
     color: black;
     font-family: 'Philosopher', sans-serif;
-    height: 6em;    
+    height: 6em;
 }
 
 .btnCheckout:hover {
     background-color: #00695C;
 }
 
-/* #tee-show {
-    background-color: #c4f7eb;
-} */
-
-.outOfStock {
-    /* display: none; */
+.out-of-stock {
     opacity: 0.2;
+    border: 1px solid #7c7a7a;
+}
+
+.out-of-stock:hover {
+    background-color: transparent;
 }
 
 .selected {
@@ -448,5 +444,4 @@ stack on top of each other instead of next to each other */
     #tee-show, .cloth-caro {
         flex-direction: column;
     }
-
 }

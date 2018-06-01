@@ -1,6 +1,6 @@
 
-// This file allows us to seed our application with data
-// simply run: `node seed.js` from the root of this project folder.
+
+// run: `node seed.js` in the terminal from the root of this project folder.
 
 const db = require("./models");
 
