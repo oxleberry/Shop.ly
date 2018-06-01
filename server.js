@@ -83,14 +83,14 @@ app.post('/api/users', (req, res) => {
           // }
       //     res.json(newDesignSuccess);
       // });
-      // let createUser = new db.User ({
-      //     first_name: req.body.first_name,
-      //     last_name: req.body.last_name,
-      //     phone: req.body.phone,
-      //     e_mail: req.body.e_mail,
-      //     address: req.body.address
-      // });
-      let createUser = new db.User (req.body);
+      let createUser = new db.User ({
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          phone: req.body.phone,
+          e_mail: req.body.e_mail,
+          address: req.body.address
+      });
+      // let createUser = new db.User (req.body);
       // create new book in db
       createUser.save( {}, (err, newUserSuccess) => {
           if (err) {

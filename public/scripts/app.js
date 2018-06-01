@@ -1,6 +1,6 @@
 
 let currentCart = [];
-let currentInventory = [];
+// let currentInventory = [];
 let currentTotal = [];
 let selSize;
 let selSizeQty;
@@ -88,7 +88,7 @@ function detailsSuccess(shirt) {
     <div class="show-details">
         <h2 class="showDetailsName">${shirt.name}</h2>
         <hr>
-        <h4 class="showDetailsPrice">$ ${shirt.price}</h4>
+        <h4 class="showDetailsPrice">Price: $ ${shirt.price}</h4>
         <div class="cont-row show-text cont-wrap">
             <h3 class="showDetailsSize">Size</h3>
             <button data-idx="0" type="button" class="btn btn-primary btn-md btnShirtSize size">XS: ${shirt.size[0]}</button>
@@ -97,18 +97,6 @@ function detailsSuccess(shirt) {
             <button data-idx="3" type="button" class="btn btn-primary btn-md btnShirtSize size">L: ${shirt.size[3]}</button>
             <button data-idx="4" type="button" class="btn btn-primary btn-md btnShirtSize size">XL: ${shirt.size[4]}</button>
             <button data-idx="5" type="button" class="btn btn-primary btn-md btnShirtSize size">XXL: ${shirt.size[5]}</button>
-        </div>
-        <div class="form-group cont-row">
-          <div class="showDetailsQuantity">
-              <label for="exampleFormControlSelect1">Quantity</label>
-          </div>
-          <div>
-              <select class="form-control" id="exampleFormControlSelect1">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-              </select>
-          </div>
         </div>
         <button data-id="${shirt._id}" type="button" class="btn btn-block btnShowPage btn-detail">add to bag</button>
         <hr>
@@ -238,18 +226,6 @@ function populateCart(shirt) {
         <p>${shirt.name}</p>
         <p>Price: $ ${shirt.price}</p>
         <p>Size: ${selSize}</p>
-        <div class="form-group cont-row">
-            <div class="showDetailsQuantity">
-                <label for="exampleFormControlSelect1">Quantity</label>
-            </div>
-          <div>
-              <select class="form-control" id="cart-quantity">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-              </select>
-          </div>
-        </div>
         <hr>
     </div>
     `;
@@ -273,12 +249,10 @@ function populateCart(shirt) {
             if (currentTotal.length === 0) {
                 $('.total').text(`Total: $ 0`);
             } else {
-                calcTotal();    
+                calcTotal();
             }
         });
-
     });
-
 };
 
 function invSuccess(json) {
@@ -287,46 +261,28 @@ function invSuccess(json) {
     // console.log(json.size[selSizeQty]);
 }
 
-// Create Posts
-// function renderNewDesign(design) {
-//     console.log(design);
-//     console.log(designList[0]);
-//     var showDesign = `
-//     <div class="card card-size">
-//       <img class="card-img-top" src="images/${designList[0].image}" alt="tee-design">
-//       <div class="card-body">
-//         <h5 class="card-title">${designList[0].design_title}</h5>
-//         <p class="card-text">${designList[0].custom_text}</p>
-//         <p class="card-text">${designList[0].designer_name}</p>
-//         <button class="btn btn-primary">Buy</button>
-//         <button class="btn btn-primary">Update</button>
-//         <button class="btn btn-primary">x</button>
-//       </div>
-//     </div>
-//     `;
-//
-//     $('#testing').append(showDesign);
-// }
-
 // WHEN CHECKOUT BUTTON IS CLICKED
 function userSuccess(json) {
     console.log("USER DATA");
-    console.log(json);
-
+    // console.log(json.firstName);
+    var user = json;
+    var $userName = $("#form-name").val();
+    console.log($userName);
     $('#cart-form').on('submit', function(e) {
         e.preventDefault();
-        saveUser();
-
+        $('.outer-thanks-cont').show();
+        // $("input").val();
+        var $userName = $("#form-name").val();
+        $('.outer-thanks-cont').html(`<h1>Thanks! ${$userName}</h1>`);
+        saveUser(user);
     });
-
-
 }
 
 // when checkout button is clicked
 // save user account info
 
 // Create Posts
-function saveUser() {
+function saveUser(json) {
     console.log("CREATING USER");
     $.ajax({
       method: 'POST',
@@ -339,10 +295,11 @@ function saveUser() {
 
 //save User contact info in db
 function saveUserSuccess(json){
+    console.log("SAVE USER SUCCESS");
     console.log(json);
-    $('.btnCheckout').on('click', function(){
-        $('.outer-thanks-cont').show();
-    });
+    // $('.btnCheckout').on('click', function(){
+    //     $('.outer-thanks-cont').show();
+    // });
 }
 
 function calcTotal() {
