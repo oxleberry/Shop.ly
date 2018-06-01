@@ -66,3 +66,8 @@ Challenges:
   o	Forking, Pairing, Merging and Collaborating
   o	Understanding the Controllers role
 • Understanding MongoDB
+
+### Code Samples
+#### Button Association Code
+* Linking data about a shirt using button attributes as a way to track the user's process through an order
+![Button Association - Example](./code-button-assoc.png)
