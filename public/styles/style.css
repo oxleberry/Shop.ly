@@ -275,6 +275,7 @@ p {
     border-color: black;
     color: black;
     font-family: 'Philosopher', sans-serif;
+    height: 6em;    
 }
 
 .btnCheckout:hover {
@@ -380,12 +381,14 @@ p {
 }
 
 .outer-thanks-cont {
-    margin: 5em;
-    /* height: 20em; */
+    margin: 1em 0;
     background-color: #c4f7eb;
     text-align: center;
-    padding: 2em;
+    padding: 3em;
+}
 
+input {
+    margin-bottom: .8em;
 }
 
 /* ABOUT ========================================= */
@@ -424,6 +427,7 @@ footer {
     background-color: #64FFDA;
     height: 4em;
     text-align: center;
+    padding-top: .8em;
 }
 
 .social-media
