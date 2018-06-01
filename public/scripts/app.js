@@ -1,32 +1,23 @@
 
 let currentCart = [];
+let currentInventory = [];
 let currentTotal = [];
 let selSize;
 let selSizeQty;
-
-// const designList = [
-//     {
-//         custom_text: 'Zombies are coming',
-//         design_title: 'Pancakes',
-//         designer_name: 'Mochi',
-//         image: 'precision.jpg'
-//     }
-// ];
-
-// add to current cart and current total
 
 $(function() {
     console.log('Sanity Check :)');
 
     $("#catalog-section").hide();
     $('.outer-thanks-cont').hide();
-    // category page
+    // get all the shirt designs
     $.ajax({
       method: 'GET',
       url: '/api/shirts',
       success: loadSuccess,
       error: handleError
     });
+    // get all the users
     $.ajax({
       method: 'GET',
       url: '/api/users',
@@ -34,11 +25,13 @@ $(function() {
       error: handleError
     });
 
+    // link from home section to shopping section
     $(".carousel-inner").on("click", function(){
         $("#home-section").hide();
         $("#catalog-section").show();
     });
 
+    // link back from shopping section to home section
     // $("a.home-link").on("click", function(e){
     //     e.preventDefault(;)
     //     $("#home-section").toggle();
@@ -48,12 +41,10 @@ $(function() {
 }); // end of document.ready
 
 
-
 // populates category section from database
 function loadSuccess(json) {
     console.log("loaded success");
     console.log(json);
-    // var shirt = json;
     json.forEach((el, idx) => {
         const cateShirt = `
         <div class="card card-size">
@@ -89,27 +80,6 @@ function detailsSuccess(shirt) {
     // console.log("details success");
     // console.log(shirt);
     $('#tee-show').empty();
-    // populate shirt details section
-    // const detailsShirt = `
-    // <div class="show-image">
-    //   <img src="images/${shirt.image}" alt="">
-    // </div>
-    // <div class="show-details">
-    //     <h6>${shirt.name}</h6>
-    //     <h6>$ ${shirt.price}</h6>
-    //     <div class="cont-row show-text">
-    //         <h6>Size</h6>
-    //         <button data-idx="0" class="size">XS: ${shirt.size[0]}</button>
-    //         <button data-idx="1" class="size">S: ${shirt.size[1]}</button>
-    //         <button data-idx="2" class="size">M: ${shirt.size[2]}</button>
-    //         <button data-idx="3" class="size">L: ${shirt.size[3]}</button>
-    //         <button data-idx="4" class="size">XL: ${shirt.size[4]}</button>
-    //         <button data-idx="5" class="size">XXL: ${shirt.size[5]}</button>
-    //     </div>
-    //     <button data-id="${shirt._id}" type="button" class="btn btn-outline-secondary btn-detail">add to bag</button>
-    //     <p>${shirt.description}</p>
-    // </div>
-    // `;
 
     const detailsShirt = `
     <div class="show-image">
@@ -119,7 +89,7 @@ function detailsSuccess(shirt) {
         <h2 class="showDetailsName">${shirt.name}</h2>
         <hr>
         <h4 class="showDetailsPrice">$ ${shirt.price}</h4>
-        <div class="cont-row show-text">
+        <div class="cont-row show-text cont-wrap">
             <h3 class="showDetailsSize">Size</h3>
             <button data-idx="0" type="button" class="btn btn-primary btn-md btnShirtSize size">XS: ${shirt.size[0]}</button>
             <button data-idx="1" type="button" class="btn btn-primary btn-md btnShirtSize size">S: ${shirt.size[1]}</button>
@@ -146,10 +116,10 @@ function detailsSuccess(shirt) {
     </div>
     `;
 
-
     $('#tee-show').append(detailsShirt);
     inventoryCheck(shirt);
     activateSize();
+    // when add to bag button is clicked
     $('.btn-detail').on('click', function() {
         console.log('ADD TO BAG CLICKED');
         var detailBtnAttr = $(this).attr('data-id');
@@ -166,8 +136,9 @@ function detailsSuccess(shirt) {
     });
 }
 
-// When detail button is clicked
+// When see details button is clicked
 // show only the sizes available if the inventory is above 1pc
+    // deactivate button if it has outOfStock class
 function inventoryCheck(shirt) {
     var shirtSize = shirt.size;
     // console.log("INVENTORY CHECK");
@@ -176,7 +147,6 @@ function inventoryCheck(shirt) {
         // console.log(shirtSize[idx]);
         if (shirtSize[idx] < 1) {
             $(this).addClass('outOfStock');
-            // console.log(button.size);
         }
     });
 }
@@ -197,16 +167,6 @@ function activateSize() {
         // console.log(selSize);
         // console.log(selSizeQty);
     });
-}
-
-// grab button with selected class
-function selectedSize() {
-    // console.log("SELECTED BUTTON IDX");
-    var selBtnId = $('button.selected').attr('data-idx');
-    // console.log(selBtnId);
-    // console.log("SELECTED BUTTON VAL");
-    // console.log(selSizeQty);
-    return selBtnId;
 }
 
 // when add to bag is clicked
@@ -239,6 +199,16 @@ function cartSuccess(shirt) {
     calcTotal();
 }
 
+// grab the data-idx of the selected size button
+function selectedSize() {
+    // console.log("SELECTED BUTTON IDX");
+    var selBtnId = $('button.selected').attr('data-idx');
+    // console.log(selBtnId);
+    // console.log("SELECTED BUTTON VAL");
+    // console.log(selSizeQty);
+    return selBtnId;
+}
+
 // decrement the inventory from that items size
 function decrementQty(shirt) {
     var sizeArray = shirt.size;
@@ -260,27 +230,55 @@ function decrementQty(shirt) {
 // when add to bag is clicked
 function populateCart(shirt) {
     // console.log("POPULATING CART");
-    var updateCart = `
-    <button class="cart-delete">Remove</button>
-    <img class="cart-img" src="images/${shirt.image}" alt="">
-    <p>${shirt.name}</p>
-    <p>Price: $ ${shirt.price}</p>
-    <p>Size: ${selSize}</p>
-    <div class="form-group cont-row">
-        <div class="showDetailsQuantity">
-            <label for="exampleFormControlSelect1">Quantity</label>
+
+    var popCart = `
+    <div data-id="${shirt._id}">
+        <button data-id="${shirt._id}" class="cart-delete">Remove</button>
+        <img class="cart-img" src="images/${shirt.image}" alt="">
+        <p>${shirt.name}</p>
+        <p>Price: $ ${shirt.price}</p>
+        <p>Size: ${selSize}</p>
+        <div class="form-group cont-row">
+            <div class="showDetailsQuantity">
+                <label for="exampleFormControlSelect1">Quantity</label>
+            </div>
+          <div>
+              <select class="form-control" id="cart-quantity">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+              </select>
+          </div>
         </div>
-      <div>
-          <select class="form-control" id="cart-quantity">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-          </select>
-      </div>
+        <hr>
     </div>
-    <hr>
     `;
-    $('#cart-item').append(updateCart);
+    $('#cart-item').append(popCart);
+
+    // SHOPPING CART WHEN REMOVE ITEM IS CLICKED
+    // delete this item from array
+    $('.cart-delete').on('click', function(){
+        var detailBtnAttr = $(this).attr('data-id');
+        console.log(currentCart);
+        $(this).parent().remove();
+            console.log(currentCart);
+        currentCart.forEach( function (el, idx) {
+            if (el === detailBtnAttr) {
+                currentCart.splice(idx, 1);
+                currentTotal.splice(idx, 1);
+            }
+            console.log(el);
+            console.log(idx);
+            console.log(currentCart);
+            if (currentTotal.length === 0) {
+                $('.total').text(`Total: $ 0`);
+            } else {
+                calcTotal();    
+            }
+        });
+
+    });
+
 };
 
 function invSuccess(json) {

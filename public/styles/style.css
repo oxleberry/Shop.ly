@@ -22,6 +22,10 @@ body {
     flex-direction: row;
 }
 
+.cont-wrap {
+    flex-wrap: wrap;
+}
+
 .cont-row-reverse {
     display: flex;
     flex-direction: row-reverse;
@@ -30,14 +34,6 @@ body {
 .cont-column {
     display: flex;
     flex-direction: column;
-}
-
-/* Responsive layout - when the screen is less than 1058px wide, make the two columns
-stack on top of each other instead of next to each other */
-@media (max-width: 1058px) {
-  .cont-row {
-         flex-direction: column;
-       }
 }
 
 li {
@@ -177,6 +173,10 @@ p {
     background-color: #6c757d;
 }
 
+.card-body {
+    text-align: center;
+}
+
 /* SHOW PAGE ========================================= */
 
 .outer-show-cont {
@@ -196,7 +196,7 @@ p {
     padding-top: 3em;
     padding-left: 3em;
     padding-right: 3em;
-    width: 50%;
+    width: 62%;
     background-color: #c4f7eb;;
     font-family: 'Philosopher', sans-serif;
 }
@@ -281,17 +281,18 @@ p {
     background-color: #00695C;
 }
 
-#tee-show {
+/* #tee-show {
     background-color: #c4f7eb;
-}
+} */
 
 .outOfStock {
     /* display: none; */
-    opacity: 0;
+    opacity: 0.2;
 }
 
 .selected {
-    background-color: #63ffdb;
+    background-color: #6c757d;
+    color: white;
 }
 
 /* CART ========================================= */
@@ -437,10 +438,11 @@ footer {
 
 
 /* MEDIA QUERIES ========================================= */
-/*
-@media screen and (max-width: 425px){
-    html {
-        font-size: 12pt;
+/* Responsive layout - when the screen is less than 1058px wide, make the two columns
+stack on top of each other instead of next to each other */
+@media (max-width: 1000px) {
+    #tee-show, .cloth-caro {
+        flex-direction: column;
     }
+
 }
- */
