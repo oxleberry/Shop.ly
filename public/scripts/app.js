@@ -284,6 +284,7 @@ function userSuccess(json) {
         $('.temp-item-cart').remove();
         $('.total').toggle();
         $('.outer-thanks-cont').show();
+        $('#cart-form input').val('');
     });
 }
 
