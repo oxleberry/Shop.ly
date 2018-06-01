@@ -2,7 +2,11 @@
 App Name: Shop.ly            
 
 We created an online store called Shop.ly.  On this website users can browse and purchase t-shirts. A backend database was also created to track the inventory and users.
+
 https://shirt-ly.herokuapp.com/
+
+https://github.com/oxleberry/Shop.ly
+
 Technologies Used
 Technologies used to create this website include:
 •	HTML
@@ -13,6 +17,7 @@ Technologies used to create this website include:
 •	Bootstrap
 •	MongoDB
 •	Express
+
 Existing Features
 Our site has the following features:
 •	Navigation Bar
@@ -20,6 +25,7 @@ Our site has the following features:
 •	User Order Form
 •	Shopping Cart
 •	Responsive Layout
+
 Planned Features
 As we continue to work on the site we will add the following:
 •	Ability to capture and retain each purchase of a user
@@ -30,7 +36,6 @@ As we continue to work on the site we will add the following:
 Creating Shop.ly
 
 Index.html:
-
 •	Link Bootstrap, Google Fonts, Font Awesome and personal CSS  
 •	Add Navigation Bar  
 •	Add three Bootstrap carousels to main Index.html
@@ -45,19 +50,19 @@ Index.html:
 •	Add social media icons to footer
 
 CSS Styles file:
-
 •	Use semantic HTML and CSS to create Shop.ly website.
 •	Use the appropriate Google Fonts to style the text on the page.
 •	Add a media query to update the layout and styles for a responsive design.
 
 
 Triumphs:
-•	Conquering Bootstrap for Riki – utilizing Google for guidance
-•	Conquering the MongoDB for Sharon
-•
+•	Befriending Bootstrap for Riki – utilizing Google for guidance
+•	Conquering MongoDB for Sharon
+• Decrementing inventory upon checkout/purchase
 
 Challenges:
 •	GitHub
-o	1st time working on GitHub with a peer
-o	Forking, Pairing, Merging and Collaborating 
-o	Understanding the Controllers role
+  o	1st time working on GitHub with a peer
+  o	Forking, Pairing, Merging and Collaborating
+  o	Understanding the Controllers role
+• Understanding MongoDB
